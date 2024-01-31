@@ -1,16 +1,10 @@
-/* eslint-disable @next/next/no-img-element */
 "use client";
 
 import { signIn } from "next-auth/react";
 import React, { useEffect, useState } from "react";
 import Button from "@/app/components/button";
 import Heading from "@/app/components/heading";
-// import { useMessage } from '@/lib/hooks';
-// import useEvents from '@/lib/hooks/useEvents';
-// import EventList from '@/lib/utils/eventList';
 import Image from "next/image";
-// import { useRouter } from 'next/router';
-import { FaWhatsapp } from "react-icons/fa";
 import { MdNavigateNext } from "react-icons/md";
 import OtpInput from "../components/OtpInput";
 
@@ -32,23 +26,6 @@ const Login = () => {
     });
   };
 
-  // useEffect(() => {
-  //   (async () => {
-  //     if (screen === 'PHONE_NUMBER') {
-  //       sendEvent(EventList.ONBOARDING.LOGIN_PAGE, {});
-  //     }
-
-  //     if (screen === 'OTP') {
-  //       await sendEvent(EventList.ONBOARDING.ENTER_OTP_PAGE, {});
-  //     }
-
-  //     if (screen === 'NAME') {
-  //       await sendEvent(EventList.ONBOARDING.ENTER_NAME, {});
-  //     }
-
-  //   })();
-  // }, [screen]);
-
   useEffect(() => {
     if (sentOtp) {
       setTimeout(() => {
@@ -60,7 +37,6 @@ const Login = () => {
   }, [otpTimer, sentOtp]);
 
   const validateInput = (phone: string, regexString: string) => {
-    // eslint-disable-next-line prefer-regex-literals
     const regex = new RegExp(regexString);
     const res = regex.test(phone);
 
@@ -92,80 +68,15 @@ const Login = () => {
   }, [otp]);
 
   const handleSubmitPhoneNumber = async () => {
-    // await sendEvent(EventList.ONBOARDING.SEND_OTP, {});
-    // try {
-    //   const res = await sendOtp(phoneNumber);
-    //   if (res.success) {
     setScreen("OTP");
-    //     setOtpTimer(30);
     setSentOtp(true);
-    //   } else {
-    //     throw new Error('Your request is processing. Please wait for 30 seconds.');
-    //   }
-    // } catch (err: any) {
-    //   toast.error(err.message);
-    // }
   };
 
   const handleResendOtp = async () => {
-    // try {
-    //   const res = await sendOtp(phoneNumber);
-    //   if (res.success) {
-    //     setOtpTimer(30);
-    //     await sendEvent(EventList.ONBOARDING.RESEND_OTP, {});
-    //     toast.success('The OTP has been re-sent to your number!');
-    //   } else {
-    //     throw new Error('Your request is processing. Please wait for 30 seconds.');
-    //   }
-    // } catch (err: any) {
-    //   toast.error(err.message);
-    // }
   };
 
   const handleSubmitOtp = async () => {
-    // await sendEvent(EventList.ONBOARDING.VERIFY_OTP, {});
-    // try {
-    //   const res = await verifyOtp(otp);
-    //   if (res.success) {
-    //     await sendEvent(EventList.ONBOARDING.SIGNIN_SUCCESS, {});
-    //     sendDataToUnity('USER_ID', localStorage.getItem('guestId') as any);
-    //     if (localStorage.getItem('isLoggedIn')) {
-    //       sendDataToUnity('GUEST_ID', localStorage.getItem('oldGuestId') as any);
-    //     }
-    //     sendDataToUnity('AUTH_TOKEN', localStorage.getItem('authToken') as any);
-    //     sendDataToUnity('IS_GUEST', localStorage.getItem('isLoggedIn') ? 'false' : 'true');
-    //     setScreen('NAME');
-    //     return;
-    //   }
-    //   await setOtpError(true);
-    //   await sendEvent(EventList.ONBOARDING.SIGNIN_FAIL, {});
-    // } catch (err: any) {
-    //   toast.error(err.message);
-    // }
   };
-
-  // const handleRoute = () => {
-  //   !localStorage.getItem('avatarId')
-  //     ? !router.pathname.includes('onboarding') && router.replace('/onboarding') // onboarding
-  //     : router.replace('/home');
-  // };
-
-  // const handleUpdateUsername = async () => {
-  //   await sendEvent(EventList.ONBOARDING.CONFIRM_NAME, {});
-  //   try {
-  //     const res: any = await updateUserDetails({name});
-  //     if (res?.success) {
-  //       toast.success('Name updated successfully');
-  //       await sendEvent(EventList.ONBOARDING.NAMING_SUCCESSFUL, {});
-  //       await handleRoute();
-  //       return;
-  //     }
-  //     await sendEvent(EventList.ONBOARDING.NAMING_FAILED, {});
-  //     throw new Error('Unable to update your name !');
-  //   } catch (err: any) {
-  //     toast.error(err.message);
-  //   }
-  // };
 
   return (
     <div className="flex h-screen flex-col bg-black px-8 text-center">
@@ -176,15 +87,6 @@ const Login = () => {
         objectFit="cover"
         layout="fill"
       />
-      {/* <span
-      onClick={() => {
-        sendEvent(EventList.ONBOARDING.SKIP_LOGIN, {});
-        localStorage.getItem('avatarId') ? router.push('/home') : router.push('/onboarding');
-      }}
-      className="absolute top-8 right-8 z-20 text-xl text-neon"
-    >
-      Skip
-    </span> */}
       <div className="absolute bottom-12 left-0 w-full px-8">
         <div className="fixed inset-0 mb-4 h-96 w-full scale-110 top-1/4">
           <Image

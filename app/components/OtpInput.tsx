@@ -1,5 +1,3 @@
-/* eslint-disable consistent-return */
-/* eslint-disable no-plusplus */
 import React, { useMemo } from 'react';
 import { MdOutlineError } from 'react-icons/md'
 

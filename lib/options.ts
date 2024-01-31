@@ -4,8 +4,8 @@ import CredentialsProvider from 'next-auth/providers/credentials';
 
 export const options: NextAuthOptions = {
   pages: {
-    signIn: '/auth/login',
-    error: '/auth/login',
+    signIn: '/login',
+    error: '/login',
   },
   secret: process.env.NEXTAUTH_SECRET,
   debug: process.env.NEXT_PUBLIC_NODE_ENV === 'dev',
