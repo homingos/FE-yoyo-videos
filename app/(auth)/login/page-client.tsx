@@ -7,16 +7,26 @@ import { useRouter } from "next/navigation";
 import { ArrowLeft } from "lucide-react";
 import PhoneScreen from "@/components/ui/login/phone";
 import OTPScreen from "@/components/ui/login/otp";
+import { useState } from "react";
 
 export default function LoginPageClient() {
+  const [initalized, setInitialized] = useState<boolean>(false);
+  
   const router = useRouter();
   const searchParams = useSearchParams();
+
+  console.log(initalized);
 
   return (
     <div className="flex h-screen flex-col items-center">
       <Background />
       <AnimatePresence mode="wait">
-        {!searchParams?.get("phone") && <PhoneScreen />}
+        {!searchParams?.get("phone") && (
+          <PhoneScreen
+            initalized={initalized}
+            setInitialized={setInitialized}
+          />
+        )}
         {searchParams?.get("phone") && (
           <>
             <button
@@ -28,7 +38,10 @@ export default function LoginPageClient() {
                 className="text-gray-500 group-hover:text-gray-700 group-active:scale-90"
               />
             </button>
-            <OTPScreen />
+            <OTPScreen
+              initalized={initalized}
+              setInitialized={setInitialized}
+            />
           </>
         )}
       </AnimatePresence>

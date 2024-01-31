@@ -2,21 +2,29 @@
 
 import { useEffect, useState } from "react";
 import Button from "../../button";
-import { useSearchParams } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { MaxWidthWrapper } from "../max-width-wrapper";
 import OtpInput from "@/components/OtpInput";
 import { signIn } from "next-auth/react";
 import { validateInput } from "@/lib/functions";
+import { Screens } from "./types";
 
-export default function OTPScreen() {
+export default function OTPScreen({ initalized, setInitialized }: Screens) {
   const [otp, setOtp] = useState<string>("");
   const [otpTimer, setOtpTimer] = useState<number>(30);
   const [otpError, setOtpError] = useState<boolean>(false);
   const [otpDisabled, setOtpDisabled] = useState(true);
 
   const searchParams = useSearchParams();
+  const router = useRouter();
 
   const phone = searchParams?.get("phone");
+
+  useEffect(() => {
+    if(!initalized) {
+      router.push("/login")
+    };
+  }, []);
 
   useEffect(() => {
     let timeout = setTimeout(() => {

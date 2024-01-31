@@ -1,16 +1,21 @@
 'use client';
 
-import { useEffect, useState } from "react";
+import { Dispatch, useEffect, useState } from "react";
 import Button from "../../button";
 import { useRouter } from "next/navigation";
 import { MaxWidthWrapper } from "../max-width-wrapper";
 import { validateInput } from "@/lib/functions";
+import { Screens } from "./types";
 
-export default function PhoneScreen() {
-  const [phone, setPhone] = useState<string>('');
+export default function PhoneScreen({ setInitialized }: Screens) {
+  const [phone, setPhone] = useState<string>("");
   const [submitDisabled, setSubmitDisabled] = useState(true);
 
   const router = useRouter();
+
+  useEffect(() => {
+     setInitialized(true);
+  }, []);
 
   useEffect(() => {
     const validation = validateInput(
@@ -25,14 +30,14 @@ export default function PhoneScreen() {
   }, [phone]);
 
   const handleGetOTP = () => {
-    if(phone.length < 10) {
-        // TODO: add failed toast
-        alert('Please enter a valid phone number');
-        return;
+    if (phone.length < 10) {
+      // TODO: add failed toast
+      alert("Please enter a valid phone number");
+      return;
     }
-     
+
     router.push(`/login?phone=${phone}`);
-  }
+  };
 
   return (
     <div
