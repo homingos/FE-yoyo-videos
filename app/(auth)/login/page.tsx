@@ -1,4 +1,4 @@
-// import { constructMetadata } from "@dub/utils";
+import { Suspense } from "react";
 import LoginPageClient from "./page-client";
 
 export const runtime = "nodejs";
@@ -6,7 +6,9 @@ export const runtime = "nodejs";
 export default function LoginPage() {
   return (
     <div className="flex h-screen w-screen justify-center">
-      <LoginPageClient />
+      <Suspense>
+        <LoginPageClient />
+      </Suspense>
     </div>
   );
 }

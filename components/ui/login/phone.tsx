@@ -5,17 +5,12 @@ import Button from "../../button";
 import { useRouter } from "next/navigation";
 import { MaxWidthWrapper } from "../max-width-wrapper";
 import { validateInput } from "@/lib/functions";
-import { Screens } from "./types";
 
-export default function PhoneScreen({ setInitialized }: Screens) {
+export default function PhoneScreen() {
   const [phone, setPhone] = useState<string>("");
   const [submitDisabled, setSubmitDisabled] = useState(true);
 
   const router = useRouter();
-
-  useEffect(() => {
-     setInitialized(true);
-  }, []);
 
   useEffect(() => {
     const validation = validateInput(
