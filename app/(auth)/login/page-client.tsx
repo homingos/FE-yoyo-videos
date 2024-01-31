@@ -1,12 +1,12 @@
 "use client";
 
-import { Background } from "@/app/components/ui/background";
+import { Background } from "@/components/ui/background";
 import { AnimatePresence } from "framer-motion";
 import { useSearchParams } from "next/navigation";
 import { useRouter } from "next/navigation";
 import { ArrowLeft } from "lucide-react";
-import PhoneScreen from "@/app/components/ui/login/phone";
-import OTPScreen from "@/app/components/ui/login/otp";
+import PhoneScreen from "@/components/ui/login/phone";
+import OTPScreen from "@/components/ui/login/otp";
 
 export default function LoginPageClient() {
   const router = useRouter();

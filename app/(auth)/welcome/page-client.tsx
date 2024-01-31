@@ -1,7 +1,7 @@
 "use client";
 
-import { Background } from "@/app/components/ui/background";
-import Intro from "@/app/components/ui/welcome/intro";
+import { Background } from "@/components/ui/background";
+import Intro from "@/components/ui/welcome/intro";
 import { AnimatePresence } from "framer-motion";
 
 export default function WelcomePageClient() {

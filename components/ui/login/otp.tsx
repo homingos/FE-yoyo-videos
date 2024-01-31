@@ -2,9 +2,9 @@
 
 import { useEffect, useState } from "react";
 import Button from "../../button";
-import { useRouter } from "next/navigation";
+import { useSearchParams } from "next/navigation";
 import { MaxWidthWrapper } from "../max-width-wrapper";
-import OtpInput from "@/app/components/OtpInput";
+import OtpInput from "@/components/OtpInput";
 import { signIn } from "next-auth/react";
 import { validateInput } from "@/lib/functions";
 
@@ -13,6 +13,10 @@ export default function OTPScreen() {
   const [otpTimer, setOtpTimer] = useState<number>(30);
   const [otpError, setOtpError] = useState<boolean>(false);
   const [otpDisabled, setOtpDisabled] = useState(true);
+
+  const searchParams = useSearchParams();
+
+  const phone = searchParams?.get("phone");
 
   useEffect(() => {
     let timeout = setTimeout(() => {
@@ -35,10 +39,10 @@ export default function OTPScreen() {
     }
   }, [otp]);
 
-  const router = useRouter();
-
   const handleSignIn = async () => {
     await signIn("credentials", {
+      phone: phone,
+      otp: otp,
       callbackUrl: "/dashboard",
     });
   };
