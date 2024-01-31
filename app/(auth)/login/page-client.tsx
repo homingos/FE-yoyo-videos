@@ -1,6 +1,5 @@
 "use client";
 
-import { Background } from "@/components/ui/background";
 import { AnimatePresence } from "framer-motion";
 import { useSearchParams } from "next/navigation";
 import { useRouter } from "next/navigation";
@@ -14,7 +13,6 @@ export default function LoginPageClient() {
 
   return (
     <div className="flex h-screen flex-col items-center">
-      <Background />
       <AnimatePresence mode="wait">
         {!searchParams?.get("phone") && (
           <PhoneScreen />
