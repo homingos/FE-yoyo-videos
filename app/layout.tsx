@@ -2,9 +2,10 @@ import type { Metadata } from "next";
 import { Inter, Manrope } from "next/font/google";
 import "./globals.css";
 import { cn } from "@/lib/functions";
+import { Toaster } from "@/components/ui/sonner";
 
 // const inter = Inter({ subsets: ["latin"] });
-const maprope = Manrope({subsets : ['latin']})
+const maprope = Manrope({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -18,6 +19,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
+      <Toaster />
       <body className={cn(maprope.className, "antialiased")}>{children}</body>
     </html>
   );
