@@ -43,7 +43,7 @@ export default function OTPScreen() {
     await signIn("credentials", {
       phone: phone,
       otp: otp,
-      callbackUrl: "/dashboard",
+      callbackUrl: "/welcome",
     });
   };
 
