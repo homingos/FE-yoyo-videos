@@ -5,6 +5,7 @@ import Button from "../../button";
 import { useRouter } from "next/navigation";
 import { MaxWidthWrapper } from "../max-width-wrapper";
 import { validateInput } from "@/lib/functions";
+import { sendOtp } from "@/lib/api/auth";
 
 export default function PhoneScreen() {
   const [phone, setPhone] = useState<string>("");
@@ -24,14 +25,14 @@ export default function PhoneScreen() {
     }
   }, [phone]);
 
-  const handleGetOTP = () => {
-    if (phone.length < 10) {
+  const handleGetOTP = async () => {
+    try {
+      await sendOtp(phone);
+      router.push(`/login?phone=${phone}`);
+    } catch (err: any) {
       // TODO: add failed toast
-      alert("Please enter a valid phone number");
-      return;
+      // toast.error(err.message);
     }
-
-    router.push(`/login?phone=${phone}`);
   };
 
   return (

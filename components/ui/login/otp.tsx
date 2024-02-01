@@ -7,6 +7,8 @@ import { MaxWidthWrapper } from "../max-width-wrapper";
 import OtpInput from "@/components/OtpInput";
 import { signIn } from "next-auth/react";
 import { validateInput } from "@/lib/functions";
+import { verifyOtp } from "@/lib/api/auth";
+import { sendOtp } from "@/lib/api/auth";
 
 export default function OTPScreen() {
   const [otp, setOtp] = useState<string>("");
@@ -16,7 +18,7 @@ export default function OTPScreen() {
 
   const searchParams = useSearchParams();
 
-  const phone = searchParams?.get("phone");
+  const phone: any = searchParams?.get("phone");
 
   useEffect(() => {
     let timeout = setTimeout(() => {
@@ -47,8 +49,34 @@ export default function OTPScreen() {
     });
   };
 
-  const handleResendOTP = () => {
+  const handleResendOTP = async () => {
+    await sendOtp(phone);
     setOtpTimer(30);
+  };
+
+  const handleSubmitOtp = async () => {
+    // await sendEvent(EventList.ONBOARDING.VERIFY_OTP, {});
+    try {
+      const res = await verifyOtp(otp);
+      handleSignIn();
+      // await sendEvent(EventList.ONBOARDING.SIGNIN_SUCCESS, {});
+
+      // sendDataToUnity('USER_ID', localStorage.getItem('guestId') as any);
+      if (localStorage.getItem("isLoggedIn")) {
+        // sendDataToUnity('GUEST_ID', localStorage.getItem('oldGuestId') as any);
+      }
+      // sendDataToUnity('AUTH_TOKEN', localStorage.getItem('authToken') as any);
+      // sendDataToUnity('IS_GUEST', localStorage.getItem('isLoggedIn') ? 'false' : 'true');
+
+      // setScreen('NAME');
+
+      return;
+      // await sendEvent(EventList.ONBOARDING.SIGNIN_FAIL, {});
+    } catch (err: any) {
+      await setOtpError(true);
+      // toast.error(err.message);
+      return err;
+    }
   };
 
   return (
@@ -82,7 +110,7 @@ export default function OTPScreen() {
         </p>
         <Button
           type="submit"
-          onClick={handleSignIn}
+          onClick={handleSubmitOtp}
           disabled={otpDisabled}
           className={`py-3 ${
             otpDisabled ? "bg-[#13B31C]/50" : "bg-[#13B31C]"

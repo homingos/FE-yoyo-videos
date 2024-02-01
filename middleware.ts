@@ -14,7 +14,7 @@ export default withAuth(
 
     const response = NextResponse.next();
 
-    const deviceId = req.cookies.get("deviceId")?.value;
+    const deviceId = req.cookies.get("__yoyo_videos")?.value;
 
     if (!deviceId) {
       return NextResponse.redirect(new URL("/welcome", req.url));
