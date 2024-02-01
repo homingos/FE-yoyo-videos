@@ -2,12 +2,11 @@
 
 import { useEffect, useState } from "react";
 import Button from "../../button";
-import { useSearchParams } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { MaxWidthWrapper } from "../max-width-wrapper";
 import OtpInput from "@/components/OtpInput";
 import { signIn } from "next-auth/react";
 import { validateInput } from "@/lib/functions";
-import { verifyOtp } from "@/lib/api/auth";
 import { sendOtp } from "@/lib/api/auth";
 
 export default function OTPScreen() {
@@ -17,6 +16,7 @@ export default function OTPScreen() {
   const [otpDisabled, setOtpDisabled] = useState(true);
 
   const searchParams = useSearchParams();
+  const router = useRouter();
 
   const phone: any = searchParams?.get("phone");
 
@@ -41,13 +41,6 @@ export default function OTPScreen() {
     }
   }, [otp]);
 
-  const handleSignIn = async () => {
-    await signIn("credentials", {
-      phone: phone,
-      otp: otp,
-      callbackUrl: "/home",
-    });
-  };
 
   const handleResendOTP = async () => {
     await sendOtp(phone);
@@ -55,28 +48,18 @@ export default function OTPScreen() {
   };
 
   const handleSubmitOtp = async () => {
-    // await sendEvent(EventList.ONBOARDING.VERIFY_OTP, {});
-    try {
-      // const res = await verifyOtp(otp);
-      handleSignIn();
-      // await sendEvent(EventList.ONBOARDING.SIGNIN_SUCCESS, {});
+      const res = await signIn("credentials", {
+        phone: phone,
+        otp: otp,
+        redirect: false
+      });
+      console.log(res);
 
-      // sendDataToUnity('USER_ID', localStorage.getItem('guestId') as any);
-      if (localStorage.getItem("isLoggedIn")) {
-        // sendDataToUnity('GUEST_ID', localStorage.getItem('oldGuestId') as any);
+      if(res?.ok) {
+        router.replace('/home')
+      } else {
+        await setOtpError(true);
       }
-      // sendDataToUnity('AUTH_TOKEN', localStorage.getItem('authToken') as any);
-      // sendDataToUnity('IS_GUEST', localStorage.getItem('isLoggedIn') ? 'false' : 'true');
-
-      // setScreen('NAME');
-
-      return;
-      // await sendEvent(EventList.ONBOARDING.SIGNIN_FAIL, {});
-    } catch (err: any) {
-      await setOtpError(true);
-      // toast.error(err.message);
-      return err;
-    }
   };
 
   return (
