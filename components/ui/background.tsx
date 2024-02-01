@@ -6,7 +6,7 @@ export function Background() {
       <div style={styles.backgroundMainBefore} />
       <div style={styles.backgroundMainAfter} />
       <div style={styles.backgroundContent} />
-      <Meteors />
+      <Meteors number={30} />
     </div>
   );
 }

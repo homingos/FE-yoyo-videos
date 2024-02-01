@@ -1,9 +1,8 @@
 import React from 'react'
+import AvaturnClient from './page-client'
 
 const Page = () => {
-  return (
-    <div>Page</div>
-  )
+  return <AvaturnClient />;
 }
 
 export default Page
