@@ -58,7 +58,7 @@ export default function OTPScreen() {
       if(res?.ok) {
         router.replace('/home')
       } else {
-        await setOtpError(true);
+      await setOtpError(true);
       }
   };
 

@@ -8,8 +8,9 @@ declare module 'next-auth' {
       user_profile_id: string,
       access_token: string,
       refresh_token: string,
-      ftu: boolean
-    } & DefaultSession;
+      ftu: boolean,
+      device_id: string,
+    } & DefaultSession
   }
 }
 
@@ -18,6 +19,7 @@ declare module 'next-auth/jwt' {
     user_profile_id: string,
     access_token: string,
     refresh_token: string,
-    ftu: boolean
+    ftu: boolean,
+    device_id: string,
   }
 }

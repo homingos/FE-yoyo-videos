@@ -1,4 +1,5 @@
 /* eslint-disable no-param-reassign */
+import { UserMinus } from "lucide-react";
 import type { NextAuthOptions, User } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import { cookies } from "next/headers";
@@ -24,7 +25,6 @@ export const options: NextAuthOptions = {
         otp: { label: "OTP", type: "number" },
       },
       async authorize(credentials) {
-        console.log("xxx", credentials);
         const cookieData = cookies().get("__yoyo_videos")?.value as string;
 
         const { user: guest, device_id } = JSON.parse(cookieData);
@@ -52,7 +52,7 @@ export const options: NextAuthOptions = {
             throw new Error("Network response was not ok.");
           });
 
-          const user = res.data;
+          const user = { ...res.data, device_id }
 
           return user;
         }
