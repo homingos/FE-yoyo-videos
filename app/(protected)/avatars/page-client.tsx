@@ -30,7 +30,7 @@ const AvatarSelectClient = () => {
   },[session])
 
   return (
-    <div className="relative z-20 flex h-screen flex-col items-start gap-4 py-4 overflow-scroll">
+    <div className="z-20 flex h-screen flex-col items-start gap-4 py-4 overflow-scroll w-full">
       <div className="fixed bg-gradient-to-t from-transparent via-transparent to-black/80 h-16 w-full top-0 left-0 z-40"></div>
       <p className="font-extrabold text-xl text-white mt-8 px-6">My Avatars</p>
       {avatars && <Content avatars={avatars} />}
