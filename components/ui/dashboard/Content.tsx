@@ -38,7 +38,7 @@ const content = [
 
 const Content = () => {
   return (
-    <div className='grid grid-cols-2 gap-4 items-center justify-center px-6 mt-2'>
+    <div className='grid grid-cols-2 gap-4 items-center justify-center px-6 mt-2 mb-16'>
         {content.map((imgData: {img: string, title: string}, index: number) => (
             <Card key={`${imgData.title} + ${index}`} imgData={imgData}/>
         ))}

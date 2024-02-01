@@ -12,7 +12,7 @@ export default function LoginPageClient() {
   const searchParams = useSearchParams();
 
   return (
-    <div className="flex h-screen flex-col items-center">
+    <div className="z-20 flex h-screen flex-col items-center">
       <AnimatePresence mode="wait">
         {!searchParams?.get("phone") && (
           <PhoneScreen />
