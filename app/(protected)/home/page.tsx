@@ -1,8 +1,8 @@
 import React from "react";
-import DashBoardClient from "./page-client";
+import HomeClient from "./page-client";
 
 export default function Page() {
   return (
-    <DashBoardClient />
+    <HomeClient />
   );
 }

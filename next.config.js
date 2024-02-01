@@ -67,7 +67,7 @@ module.exports = {
     return [
       {
         source: '/',
-        destination: '/dashboard',
+        destination: '/home',
         permanent: true,
       },
     ];

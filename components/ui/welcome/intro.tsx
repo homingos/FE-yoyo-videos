@@ -66,7 +66,7 @@ export default function Intro() {
           <motion.button
             variants={STAGGER_CHILD_VARIANTS}
             className="rounded-full bg-gray-200 px-10 py-2 font-medium text-black transition-colors hover:bg-white"
-            onClick={() => router.replace("/dashboard?option=Fitness")}
+            onClick={() => router.replace("/login")}
           >
             Get Started
           </motion.button>
