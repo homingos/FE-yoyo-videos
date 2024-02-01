@@ -3,9 +3,18 @@
 import { useEffect, useRef, useState } from "react";
 
 import axios from "axios";
+import FlamLoading from "@/components/ui/flam-loading";
+import { selectAvaturnAvatar } from "@/lib/api/avaturn";
+import { useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
+import { toast } from "sonner";
 
 function AvaturnClient() {
   const [link, setLink] = useState(null) as any;
+
+  const { data: session } = useSession();
+
+  const router = useRouter();
 
   const frameRef = useRef(null) as any;
 
@@ -76,16 +85,22 @@ function AvaturnClient() {
         return;
       }
 
-      console.log("xx", json);
-
       if (json.source !== "avaturn") {
         return;
       }
 
       // Get avatar GLB URL
       if (json.eventName === "v2.avatar.exported") {
-        console.log("URL", json.data);
-        console.log("URL", json.data.url);
+        (async () => {
+         try {
+           await selectAvaturnAvatar(session, json.data.url) as any;
+           toast.success("Wohooo Avatar Created !!");
+           router.replace("/home");
+         } catch (error) {
+          toast.error("Something went wrong!");
+          router.replace("/avatars");
+         }
+        })();
       }
     }
 
@@ -96,7 +111,7 @@ function AvaturnClient() {
       window.removeEventListener("message", subscribe);
       document.removeEventListener("message", subscribe);
     };
-  }, [link]);
+  }, [link, session]);
 
   return (
     <div className="h-full w-full flex items-center justify-center bg-black">
@@ -109,7 +124,7 @@ function AvaturnClient() {
           allow="camera *; microphone *; clipboard-write"
         ></iframe>
       ) : (
-        <p>loading...</p>
+        <FlamLoading />
       )}
     </div>
   );

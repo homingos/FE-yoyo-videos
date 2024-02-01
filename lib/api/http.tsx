@@ -37,8 +37,6 @@ export const getAvatars = async (session: any) => {
   const page = 0;
   const page_size = 1000;
 
-  console.log('sesssion', session);
-
   const res = await fetch(
     `${process.env.NEXT_PUBLIC_BACKEND_URL}thanos/v1/user-profile/avatar?page_no=${page}&page_size=${page_size}`,
     {
