@@ -56,30 +56,3 @@ export const sendOtp = async (number: string) => {
 
   return res.data;
 };
-
-export const verifyOtp = async (otp: string) => {
-  const yoyo_videos = cookies.get('__yoyo_videos') as string;
-  const { device_id, user } = JSON.parse(yoyo_videos);
-
-  const res = await fetch(
-    `${process.env.NEXT_PUBLIC_BACKEND_URL}thanos/v1/oauth/verify-otp`,
-    {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        'Authorization': `Bearer ${user?.access_token}`,
-        "device-id": device_id,
-      },
-      body: JSON.stringify({
-        otp
-      }),
-    }
-  ).then((response) => {
-    if (response.ok) {
-      return response.json();
-    }
-    throw new Error("Network response was not ok.");
-  });
-
-  return res.data;
-};

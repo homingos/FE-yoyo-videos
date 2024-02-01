@@ -1,64 +1,75 @@
 /* eslint-disable no-param-reassign */
-import type { NextAuthOptions, User } from 'next-auth';
-import CredentialsProvider from 'next-auth/providers/credentials';
+import type { NextAuthOptions, User } from "next-auth";
+import CredentialsProvider from "next-auth/providers/credentials";
+import { cookies } from "next/headers";
 
 export const options: NextAuthOptions = {
   pages: {
-    signIn: '/login',
-    error: '/login',
+    signIn: "/login",
+    error: "/login",
   },
   secret: process.env.NEXTAUTH_SECRET,
-  debug: process.env.NEXT_PUBLIC_NODE_ENV === 'dev',
+  debug: process.env.NEXT_PUBLIC_NODE_ENV === "dev",
   session: {
-    strategy: 'jwt',
+    strategy: "jwt",
   },
   // jwt: {
   //   secret: process.env.NEXTAUTH_JWT_SECRET,
   // },
   providers: [
     CredentialsProvider({
-      name: 'credentials',
+      name: "credentials",
       credentials: {
-        phone: { label: 'Phone', type: 'number' },
-        otp: { label: 'OTP', type: 'password' },
+        phone: { label: "Phone", type: "number" },
+        otp: { label: "OTP", type: "number" },
       },
       async authorize(credentials) {
-        console.log('xxx', credentials);
+        console.log("xxx", credentials);
+        const cookieData = cookies().get("__yoyo_videos")?.value as string;
 
-        let user: User; 
-        // if (credentials?.password && credentials?.email) {
-        //   const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL_V2}/workspace/user/login`, {
-        //     method: 'POST',
-        //     headers: {
-        //       'content-type': 'application/json',
-        //     },
-        //     body: JSON.stringify({
-        //       password: credentials?.password,
-        //       email: credentials?.email
-        //     }),
-        //   });
+        const { user: guest, device_id } = JSON.parse(cookieData);
 
-        //   const data = await res.json();
+        let user: User;
 
-        //   console.log(data);
+        if (credentials?.otp && credentials?.phone) {
+          const res = await fetch(
+            `${process.env.NEXT_PUBLIC_BACKEND_URL}thanos/v1/oauth/verify-otp`,
+            {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${guest?.access_token}`,
+                "device-id": device_id,
+              },
+              body: JSON.stringify({
+                otp: credentials?.otp,
+              }),
+            }
+          ).then((response) => {
+            if (response.ok) {
+              return response.json();
+            }
+            throw new Error("Network response was not ok.");
+          });
 
-          user = {
-            id: '123',
-            name: '123',
-          };
+          const user = res.data;
 
-        //   if (!user) throw new Error('Invalid Credentials!');
+          return user;
+        }
 
-       
-
-        return user;
-
-        // return null;
+        return null;
       },
     }),
   ],
   callbacks: {
-    jwt: ({ token }) => {
+    jwt: ({ token, user }) => {
+      if (user) {
+        return {
+          ...token,
+          ...user,
+        };
+      }
+
       return token;
     },
     session: async ({ session, token }) => {

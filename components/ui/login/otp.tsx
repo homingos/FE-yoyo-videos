@@ -57,7 +57,7 @@ export default function OTPScreen() {
   const handleSubmitOtp = async () => {
     // await sendEvent(EventList.ONBOARDING.VERIFY_OTP, {});
     try {
-      const res = await verifyOtp(otp);
+      // const res = await verifyOtp(otp);
       handleSignIn();
       // await sendEvent(EventList.ONBOARDING.SIGNIN_SUCCESS, {});
 

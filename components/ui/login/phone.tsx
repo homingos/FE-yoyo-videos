@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation";
 import { MaxWidthWrapper } from "../max-width-wrapper";
 import { validateInput } from "@/lib/functions";
 import { sendOtp } from "@/lib/api/auth";
+import { toast } from 'sonner';
 
 export default function PhoneScreen() {
   const [phone, setPhone] = useState<string>("");
@@ -31,7 +32,7 @@ export default function PhoneScreen() {
       router.push(`/login?phone=${phone}`);
     } catch (err: any) {
       // TODO: add failed toast
-      // toast.error(err.message);
+      toast.error("hello bhaiya galat OTP");
     }
   };
 
