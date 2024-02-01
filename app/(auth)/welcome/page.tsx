@@ -3,6 +3,6 @@ import WelcomePageClient from "./page-client";
 
 export const runtime = "nodejs";
 
-export default function WelcomePage() {
+export default async function WelcomePage() {
   return <WelcomePageClient />;
 }

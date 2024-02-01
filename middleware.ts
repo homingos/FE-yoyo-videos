@@ -1,17 +1,26 @@
-/* eslint-disable consistent-return */
-import { NextResponse } from 'next/server';
-import { getToken } from 'next-auth/jwt';
-import type { NextRequestWithAuth } from 'next-auth/middleware';
-import { withAuth } from 'next-auth/middleware';
+import { NextResponse } from "next/server";
+import { getToken } from "next-auth/jwt";
+import type { NextRequestWithAuth } from "next-auth/middleware";
+import { withAuth } from "next-auth/middleware";
 
 export default withAuth(
   async function middleware(req: NextRequestWithAuth) {
     const token = await getToken({ req });
     const isAuth = !!token;
     const isAuthPage =
-      req.nextUrl.pathname.startsWith('/login');
+      req.nextUrl.pathname.startsWith("/login");
 
-    if (isAuthPage) {
+    const isWelcomePage = req.nextUrl.pathname.startsWith("/welcome");
+
+    const response = NextResponse.next();
+
+    const deviceId = req.cookies.get("deviceId")?.value;
+
+    if (!deviceId) {
+      return NextResponse.redirect(new URL("/welcome", req.url));
+    }
+
+    if (isAuthPage || isWelcomePage) {
       if (isAuth) {
         return NextResponse.redirect(new URL("/home", req.url));
       }
@@ -19,7 +28,7 @@ export default withAuth(
       return null;
     }
 
-    if (!isAuth) {
+    if (!isAuth && deviceId) {
       let from = req.nextUrl.pathname;
       if (req.nextUrl.search) {
         from += req.nextUrl.search;
@@ -30,7 +39,7 @@ export default withAuth(
       );
     }
 
-    return NextResponse.next();
+    return response;
   },
   {
     callbacks: {
