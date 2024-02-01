@@ -24,12 +24,11 @@ export const handleGuestLogin = async (deviceId: string) => {
     }
     throw new Error("Network response was not ok.");
   });
-
   return res.data;
 };
 
 export const sendOtp = async (number: string) => {
-  const yoyo_videos = cookies.get('__yoyo_videos') as string;
+  const yoyo_videos = cookies.get("__yoyo_videos") as string;
 
   const { device_id, user } = JSON.parse(yoyo_videos);
 
@@ -39,7 +38,7 @@ export const sendOtp = async (number: string) => {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        'Authorization': `Bearer ${user?.access_token}`,
+        Authorization: `Bearer ${user?.access_token}`,
         "device-id": device_id,
       },
       body: JSON.stringify({
@@ -50,8 +49,11 @@ export const sendOtp = async (number: string) => {
   ).then((response) => {
     if (response.ok) {
       return response.json();
+    } else {
+      return response.json().then((errorResponse) => {
+        throw new Error(errorResponse.message || "Unknown error occurred");
+      });
     }
-    throw new Error("Network response was not ok.");
   });
 
   return res.data;

@@ -1,4 +1,4 @@
-'use client';
+"use client";
 
 import { Dispatch, useEffect, useState } from "react";
 import Button from "../../button";
@@ -6,7 +6,7 @@ import { useRouter } from "next/navigation";
 import { MaxWidthWrapper } from "../max-width-wrapper";
 import { validateInput } from "@/lib/functions";
 import { sendOtp } from "@/lib/api/auth";
-import { toast } from 'sonner';
+import { toast } from "sonner";
 
 export default function PhoneScreen() {
   const [phone, setPhone] = useState<string>("");
@@ -15,10 +15,7 @@ export default function PhoneScreen() {
   const router = useRouter();
 
   useEffect(() => {
-    const validation = validateInput(
-      phone,
-      "^[(]?[0-9]{3}[)]?[0-9]{3}[-s.]?[0-9]{4}$"
-    );
+    const validation = validateInput(phone, "^0?[3-9]\\d{9}$");
     if (validation) {
       setSubmitDisabled(false);
     } else {
@@ -32,7 +29,7 @@ export default function PhoneScreen() {
       router.push(`/login?phone=${phone}`);
     } catch (err: any) {
       // TODO: add failed toast
-      toast.error("hello bhaiya galat OTP");
+      toast.error(err.message);
     }
   };
 
@@ -49,7 +46,7 @@ export default function PhoneScreen() {
             onChange={(e: any) => setPhone(e.target.value)}
             className="w-full bg-transparent focus:outline-none"
             placeholder="Enter your phone number"
-            maxLength={10}
+            maxLength={11}
             autoFocus
           />
         </div>

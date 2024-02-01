@@ -8,6 +8,7 @@ import OtpInput from "@/components/OtpInput";
 import { signIn } from "next-auth/react";
 import { validateInput } from "@/lib/functions";
 import { sendOtp } from "@/lib/api/auth";
+import { toast } from "sonner";
 
 export default function OTPScreen() {
   const [otp, setOtp] = useState<string>("");
@@ -41,25 +42,28 @@ export default function OTPScreen() {
     }
   }, [otp]);
 
-
   const handleResendOTP = async () => {
-    await sendOtp(phone);
-    setOtpTimer(30);
+    try {
+      await sendOtp(phone);
+      setOtpTimer(30);
+    } catch (err: any) {
+      toast.error(err.message);
+    }
   };
 
   const handleSubmitOtp = async () => {
-      const res = await signIn("credentials", {
-        phone: phone,
-        otp: otp,
-        redirect: false
-      });
-      console.log(res);
+    const res = await signIn("credentials", {
+      phone: phone,
+      otp: otp,
+      redirect: false,
+    });
+    console.log(res);
 
-      if(res?.ok) {
-        router.replace('/home')
-      } else {
-        await setOtpError(true);
-      }
+    if (res?.ok) {
+      router.replace("/home");
+    } else {
+      await setOtpError(true);
+    }
   };
 
   return (
