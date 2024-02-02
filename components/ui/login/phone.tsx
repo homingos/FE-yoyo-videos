@@ -53,6 +53,7 @@ export default function PhoneScreen() {
             placeholder="Enter your phone number"
             maxLength={11}
             autoFocus
+            inputMode="numeric"
           />
         </div>
         <Button
@@ -60,7 +61,7 @@ export default function PhoneScreen() {
           onClick={handleGetOTP}
           disabled={submitDisabled}
         >
-            GET OTP
+          GET OTP
         </Button>
       </MaxWidthWrapper>
     </div>
