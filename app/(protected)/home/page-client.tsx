@@ -1,6 +1,7 @@
 "use client";
 
 import Icon from "@/components/icons";
+import { createUserVideo } from "@/lib/api/http";
 import Image from "next/image";
 import Link from "next/link";
 import React, { useState } from "react";
@@ -11,6 +12,12 @@ import React, { useState } from "react";
 const HomeClient = ({ templates }: any) => {
   const item = templates[0];
   const [play, setPlay] = useState<boolean>(false);
+  
+  const handleCreatevideo = async () => {
+    await createUserVideo(item?._id)
+    .then((res: any) => console.log(res))
+    .catch((err: any) => console.log(err))
+  }
 
   return (
     <div className="relative z-20 flex h-screen w-full flex-col items-start gap-4 overflow-hidden">
@@ -36,14 +43,14 @@ const HomeClient = ({ templates }: any) => {
         />
       </div>
       {play && (
-          <video
-            autoPlay
-            loop
-            className="object-cover h-full w-full z-30 duration-300 ease-in-out"
-          >
-            <source src={item?.preview_url} type="video/mp4" />
-          </video>
-        )}
+        <video
+          autoPlay
+          loop
+          className="object-cover h-full w-full z-30 duration-300 ease-in-out"
+        >
+          <source src={item?.preview_url} type="video/mp4" />
+        </video>
+      )}
       <div className="absolute z-30 bg-gradient-to-b from-transparent via-black/60 to-black/80 h-48 w-full bottom-0 left-0"></div>
       <div className="fixed bottom-2 left-0 flex flex-col p-4 gap-2 z-30 w-full">
         <span className="text-white text-xl font-bold mb-4 flex w-full justify-between items-center">
@@ -64,6 +71,7 @@ const HomeClient = ({ templates }: any) => {
           {item?.display_name} theme song
         </span> */}
         <button
+          onClick={handleCreatevideo}
           type="button"
           className="w-full rounded-full py-2 flex gap-2 justify-center font-bold items-center bg-[#B9FA00] mb-6"
         >

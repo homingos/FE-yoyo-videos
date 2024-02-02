@@ -3,6 +3,7 @@
 import axios from "axios";
 import { getServerSession } from "next-auth";
 import { options } from "../options";
+import { cookies } from "next/headers";
 
 export const http = axios.create({
   baseURL: `${process.env.NEXT_PUBLIC_BACKEND_URL}`,
@@ -107,3 +108,36 @@ export const getVideos = async () => {
 
   return res.data;
 };
+
+export const createUserVideo = async (template_id: string) => {
+  const session = await getServerSession(options);
+
+  const cookieData: any = cookies().get('__avatar')?.value;
+
+  const avatar_id = JSON.parse(cookieData)?.id
+
+  const res = await fetch(
+    `${process.env.NEXT_PUBLIC_BACKEND_URL}thanos/v1/user-videos/create`,
+    {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${session?.user?.access_token}`,
+        "device-id": session?.user?.device_id as string,
+      },
+      body : JSON.stringify({
+        template_id,
+        "user_profile_id": session?.user?.user_profile_id,
+        avatar_id
+      }),
+      cache: "no-store",
+    }
+  ).then((response) => {
+    if (response.ok) {
+      return response.json();
+    }
+    throw new Error("Network response was not ok.");
+  });
+
+  return res.data;
+}
