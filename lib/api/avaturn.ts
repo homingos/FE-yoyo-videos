@@ -1,6 +1,6 @@
 export const selectAvaturnAvatar = async (session: any, url: any, gender: any, avatar_id: string) => {
   const res = await fetch(
-    `${process.env.NEXT_PUBLIC_BACKEND_URL}thanos/v1/user-profile/avatar/avaturn`,
+    `${process.env.NEXT_PUBLIC_BACKEND_URL}thanos/v1/user-profile/avatar/avaturn/v2`,
     {
       headers: {
         "Content-Type": "application/json",
