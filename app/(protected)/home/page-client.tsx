@@ -28,20 +28,22 @@ const HomeClient = ({ templates }: any) => {
         <Icon icon={"video"} size={25} />
       </Link>
       <div className="absolute left-0 top-0 h-full w-full z-30">
-        {!play && (
-          <Image
-            fill
-            className="object-fit saturate-50 duration-300 ease-in-out"
-            src={item?.thumbnail_url}
-            alt={"hello"}
-          />
-        )}
-        {play && (
-          <video autoPlay loop className="object-fit duration-300 ease-in-out">
+        <Image
+          fill
+          className="object-fit saturate-50 duration-300 ease-in-out z-30"
+          src={item?.thumbnail_url}
+          alt={"hello"}
+        />
+      </div>
+      {play && (
+          <video
+            autoPlay
+            loop
+            className="object-cover h-full w-full z-30 duration-300 ease-in-out"
+          >
             <source src={item?.preview_url} type="video/mp4" />
           </video>
         )}
-      </div>
       <div className="absolute z-30 bg-gradient-to-b from-transparent via-black/60 to-black/80 h-48 w-full bottom-0 left-0"></div>
       <div className="fixed bottom-2 left-0 flex flex-col p-4 gap-2 z-30 w-full">
         <span className="text-white text-xl font-bold mb-4 flex w-full justify-between items-center">
