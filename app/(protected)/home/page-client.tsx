@@ -6,15 +6,22 @@ import Image from "next/image";
 import Link from "next/link";
 import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
+import { useRouter } from "next/navigation";
 
 const HomeClient = ({ templates }: any) => {
   const item = templates[0];
   const [play, setPlay] = useState<boolean>(false);
+  const [loading, setLoading] = useState<boolean>(false)
+
+  const router = useRouter();
   
   const handleCreatevideo = async () => {
+    setLoading(true)
     await createUserVideo(item?._id)
-    .then((res: any) => console.log(res))
+    .then((res: any) => setLoading(false))
     .catch((err: any) => console.log(err))
+
+    router.push('/home/create');
   }
 
   return (
@@ -71,9 +78,10 @@ const HomeClient = ({ templates }: any) => {
         <Button
           onClick={handleCreatevideo}
           type="button"
+          disabled={loading}
         >
           <Icon icon={"create"} size={"18"} />
-          Create
+          {!loading ? 'Create' : 'creating video...'}
         </Button>
         {/* <span className="flex gap-2 text-sm items-center w-full justify-center text-white">
           Scroll to see next <Icon icon={"doubleUp"} />

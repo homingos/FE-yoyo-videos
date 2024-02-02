@@ -128,7 +128,7 @@ export const createUserVideo = async (template_id: string) => {
       body : JSON.stringify({
         template_id,
         "user_profile_id": session?.user?.user_profile_id,
-        avatar_id
+        avatar_id: '6409e1c807622cb36ea1006e'
       }),
       cache: "no-store",
     }

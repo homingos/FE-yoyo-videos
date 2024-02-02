@@ -6,7 +6,6 @@ import { useRouter } from "next/navigation";
 import { ArrowLeft } from "lucide-react";
 import PhoneScreen from "@/components/ui/login/phone";
 import OTPScreen from "@/components/ui/login/otp";
-import { Button } from "@/components/ui/button";
 
 export default function LoginPageClient() {
   const router = useRouter();
