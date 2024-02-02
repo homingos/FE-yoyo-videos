@@ -1,7 +1,6 @@
-/* eslint-disable @next/next/no-img-element */
-import { Skeleton } from "@/components/Skeleton";
 import { cn } from "@/lib/utils";
 import React, { useEffect, useState } from "react";
+import Image from 'next/image';
 
 const content = [
   "https://s3-alpha-sig.figma.com/img/db79/e05d/61f120adc195e72e9d0b77361fd20110?Expires=1707696000&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=JuPoFFSS~koVhhukii4jE5U778w1Zz33OvhmmgDLlMAgzVbRi8d8HRp35MQgTT17W0m9L3xCS0cejlDz7OE3JjeQIr2RPhU9v2DxgwQ0jb0CQUSO3MfLotBWL7xHAzPC9sBCMKyMSvJDk9LA9PThl9CBy0CLFZvyByGHl9fc5Uqt9lrBOGeHiCIcssLRl0xqA5WXMR7tcTY72nH1E7~IM4Gu1hAAQ7~OhBFNpwtG8rbanr0Se1XwmS14gG~85TPlA0Es9bU-9pubBLD-UZ6bwhPscWh4vGBJn0tK4CLjMeWIHp336HfDvirZKt0ZAFPogc77JfdbpeFUmW6jQyRaew__",
@@ -31,26 +30,33 @@ const Card = ({ avatarData }: any) => {
   return (
     <div
       className={cn(
-        "relative rounded-2xl overflow-hidden w-full h-[311px] p-[1px]",
-        !isLoading && 'bg-gradient-to-l from-green-500 via-gray-500 to-black delay-700'
+        "relative inline-flex rounded-2xl overflow-hidden w-full h-72 p-[2px] bg-[#0a0a0a]"
       )}
     >
-      {/* {urlFetching && (
-        <Skeleton className="rounded-2xl overflow-hidden w-full h-[311px]" />
-      )} */}
-      {!urlFetching && url !== "" && (
-        <img
-          src={url}
-          alt="card"
-          className={cn(
-            "object-contain h-full w-full rounded-2xl duration-300 ease-in-out",
-            isLoading ? "scale-110 blur-2xl grayscale" : "scale-100 blur-0"
-          )}
-          onLoad={() => setLoading(false)}
-        />
+      <span
+        className={cn(
+          "absolute inset-[-1000%] animate-[spin_2s_linear_infinite] bg-yellow-500",
+          url
+            ? "bg-[conic-gradient(from_90deg_at_50%_50%,#E2CBFF_0%,#393BB2_50%,#E2CBFF_100%)]"
+            : "bg-yellow-500 opacity-30 animate-pulse"
+        )}
+      />
+      <div className="relative inline-flex items-center justify-center rounded-2xl overflow-hidden h-full w-full bg-[#0a0a0a]">
+        {!urlFetching && url !== "" && (
+          <Image
+            src={url}
+            alt="card"
+            className={cn(
+              "object-cover h-full w-full duration-300 ease-in-out"
+            )}
+            fill
+          />
+        )}
+        {!url && <p className="text-white">loading...</p>}
+      </div>
+      {url && (
+        <div className="absolute z-20 bg-gradient-to-b from-transparent via-black/80 to-black/60 h-24 w-full bottom-0 left-0"></div>
       )}
-      {!urlFetching && url === "" && <div className="text-xl bg-black rounded-2xl text-white flex items-center justify-center w-full h-full">Loading...</div>}
-      <div className="absolute z-20 bg-gradient-to-b from-transparent via-black/80 to-black/60 h-24 w-full bottom-0 left-0"></div>
     </div>
   );
 };

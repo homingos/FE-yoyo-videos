@@ -17,6 +17,9 @@ module.exports = {
       {
         hostname: "d2vwwcvoksz7ty.cloudfront.net",
       },
+      {
+        hostname: "s3-alpha-sig.figma.com",
+      }
     ],
   },
   webpack: (config, { webpack, isServer }) => {

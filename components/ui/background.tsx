@@ -21,7 +21,7 @@ const styles: { [key: string]: React.CSSProperties } = {
     justifyContent: "center",
     padding: "120px 24px 160px 24px",
     pointerEvents: "none",
-    background: "#0a0a0a",
+    background: "#023020",
   },
   backgroundMainBefore: {
     background: "radial-gradient(circle, rgba(2, 0, 36, 0) 0, #0a0a0a 100%)",
@@ -46,7 +46,7 @@ const styles: { [key: string]: React.CSSProperties } = {
     zIndex: 3,
     width: "100%",
     maxWidth: "640px",
-    // backgroundImage: `radial-gradient(at 27% 37%, hsla(215, 98%, 61%, 1) 0px, transparent 0%), 
+    // backgroundImage: `radial-gradient(at 27% 37%, hsla(215, 98%, 61%, 1) 0px, transparent 0%),
     //                   radial-gradient(at 97% 21%, hsla(125, 98%, 72%, 1) 0px, transparent 50%),
     //                   radial-gradient(at 52% 99%, hsla(354, 98%, 61%, 1) 0px, transparent 50%),
     //                   radial-gradient(at 10% 29%, hsla(256, 96%, 67%, 1) 0px, transparent 50%),
