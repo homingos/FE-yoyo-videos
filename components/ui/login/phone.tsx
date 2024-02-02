@@ -1,24 +1,21 @@
-'use client';
+"use client";
 
 import { Dispatch, useEffect, useState } from "react";
-import Button from "../../button";
 import { useRouter } from "next/navigation";
 import { MaxWidthWrapper } from "../max-width-wrapper";
 import { validateInput } from "@/lib/functions";
 import { sendOtp } from "@/lib/api/auth";
-import { toast } from 'sonner';
+import { toast } from "sonner";
 
 export default function PhoneScreen() {
   const [phone, setPhone] = useState<string>("");
   const [submitDisabled, setSubmitDisabled] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
 
   const router = useRouter();
 
   useEffect(() => {
-    const validation = validateInput(
-      phone,
-      "^[(]?[0-9]{3}[)]?[0-9]{3}[-s.]?[0-9]{4}$"
-    );
+    const validation = validateInput(phone, "^0?[3-9]\\d{9}$");
     if (validation) {
       setSubmitDisabled(false);
     } else {
@@ -28,12 +25,15 @@ export default function PhoneScreen() {
 
   const handleGetOTP = async () => {
     try {
+      setIsLoading(true);
       await sendOtp(phone);
-      router.push(`/login?phone=${phone}`);
+      router.replace(`/login?phone=${phone}`);
     } catch (err: any) {
       // TODO: add failed toast
-      toast.error("hello bhaiya galat OTP");
+      toast.error(err.message);
+      setIsLoading(false);
     }
+    setIsLoading(false);
   };
 
   return (
@@ -48,22 +48,17 @@ export default function PhoneScreen() {
             value={phone}
             onChange={(e: any) => setPhone(e.target.value)}
             className="w-full bg-transparent focus:outline-none"
+            disabled={isLoading}
             placeholder="Enter your phone number"
-            maxLength={10}
+            maxLength={11}
             autoFocus
           />
         </div>
-        <Button
-          onClick={handleGetOTP}
-          disabled={submitDisabled}
-          className={`py-3 ${
-            submitDisabled ? "bg-[#13B31C]/50" : "bg-[#13B31C]"
-          } w-1/2`}
-        >
+        <button onClick={handleGetOTP} disabled={submitDisabled || isLoading}>
           <p className="flex items-center justify-center gap-2 font-primaryBoldItalic uppercase text-white">
-            GET OTP
+            {isLoading ? "Sending..." : "GET OTP"}
           </p>
-        </Button>
+        </button>
       </MaxWidthWrapper>
     </div>
   );

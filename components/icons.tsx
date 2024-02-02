@@ -1,6 +1,22 @@
 /* eslint-disable import/no-extraneous-dependencies */
 import type { LucideIcon } from "lucide-react";
-import { Clock4, Dumbbell, Martini, TrendingUp, Users, PlusCircle, Plus, BarChart2, Wand2, UserRound, Video, ChevronsUp, PlayCircle, PauseCircle } from "lucide-react";
+import {
+  Clock4,
+  Dumbbell,
+  Martini,
+  TrendingUp,
+  Users,
+  PlusCircle,
+  Plus,
+  BarChart2,
+  Wand2,
+  UserRound,
+  Video,
+  ChevronsUp,
+  PlayCircle,
+  PauseCircle,
+  Home,
+} from "lucide-react";
 
 import { cn } from "@/lib/functions";
 
@@ -11,7 +27,7 @@ export const icons: IIcon = {
   fitness: Dumbbell,
   dance: Martini,
   celebrity: TrendingUp,
-  faceOff: Users, 
+  faceOff: Users,
   extra: PlusCircle,
   plus: Plus,
   bar: BarChart2,
@@ -20,7 +36,8 @@ export const icons: IIcon = {
   video: Video,
   doubleUp: ChevronsUp,
   play: PlayCircle,
-  pause: PauseCircle
+  pause: PauseCircle,
+  home: Home,
 };
 
 const Icon = ({

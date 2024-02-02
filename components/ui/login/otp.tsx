@@ -1,19 +1,20 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import Button from "../../button";
 import { useRouter, useSearchParams } from "next/navigation";
 import { MaxWidthWrapper } from "../max-width-wrapper";
 import OtpInput from "@/components/OtpInput";
 import { signIn } from "next-auth/react";
 import { validateInput } from "@/lib/functions";
 import { sendOtp } from "@/lib/api/auth";
+import { toast } from "sonner";
 
 export default function OTPScreen() {
   const [otp, setOtp] = useState<string>("");
   const [otpTimer, setOtpTimer] = useState<number>(30);
   const [otpError, setOtpError] = useState<boolean>(false);
   const [otpDisabled, setOtpDisabled] = useState(true);
+  const [loading, setLoading] = useState(false);
 
   const searchParams = useSearchParams();
   const router = useRouter();
@@ -41,25 +42,33 @@ export default function OTPScreen() {
     }
   }, [otp]);
 
-
   const handleResendOTP = async () => {
-    await sendOtp(phone);
-    setOtpTimer(30);
+    setLoading(true);
+    try {
+      await sendOtp(phone);
+      setOtpTimer(30);
+    } catch (err: any) {
+      toast.error(err.message);
+    }
+    setLoading(false);
   };
 
   const handleSubmitOtp = async () => {
-      const res = await signIn("credentials", {
-        phone: phone,
-        otp: otp,
-        redirect: false
-      });
-      console.log(res);
+    setLoading(true);
 
-      if(res?.ok) {
-        router.replace('/home')
-      } else {
+    const res = await signIn("credentials", {
+      phone: phone,
+      otp: otp,
+      redirect: false,
+    });
+    console.log(res);
+
+    if (res?.ok) {
+      router.replace("/home");
+    } else {
       await setOtpError(true);
-      }
+    }
+    setLoading(false);
   };
 
   return (
@@ -91,7 +100,7 @@ export default function OTPScreen() {
             <span className="text-gray-600">Resend OTP in {otpTimer}s</span>
           )}
         </p>
-        <Button
+        <button
           type="submit"
           onClick={handleSubmitOtp}
           disabled={otpDisabled}
@@ -100,9 +109,9 @@ export default function OTPScreen() {
           } w-1/2`}
         >
           <p className="flex items-center justify-center gap-2 font-primaryBoldItalic uppercase text-white">
-            VERIFY
+            {loading ? "Verifying..." : "VERIFY"}
           </p>
-        </Button>
+        </button>
       </MaxWidthWrapper>
     </div>
   );
