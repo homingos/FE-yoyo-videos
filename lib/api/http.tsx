@@ -3,7 +3,6 @@
 import axios from "axios";
 import { getServerSession } from "next-auth";
 import { options } from "../options";
-import { headers } from "next/headers";
 
 export const http = axios.create({
   baseURL: `${process.env.NEXT_PUBLIC_BACKEND_URL}`,
@@ -52,6 +51,7 @@ export const getAvatars = async () => {
         Authorization: `Bearer ${session?.user?.access_token}`,
         "device-id": session?.user?.device_id as string,
       },
+      cache: "no-store",
     }
   ).then((response) => {
     if (response.ok) {
@@ -72,7 +72,7 @@ export const getTemplates = async () => {
         "Content-Type": "application/json",
         "api-key": "4c6e5d06-0d8e-4026-9a61-fc3d75fda1b0",
       },
-      cache: "no-cache",
+      cache: "no-store",
     }
   ).then((response) => {
     if (response.ok) {
@@ -84,24 +84,23 @@ export const getTemplates = async () => {
   return res.data;
 };
 
-export const getVideos = async (session: any) => {
-  console.log("fetching video");
+export const getVideos = async () => {
+  const session = await getServerSession(options);
+
   const res = await fetch(
     `${process.env.NEXT_PUBLIC_BACKEND_URL}thanos/v1/user-videos/user/all`,
     {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${session?.data?.user?.access_token}`,
-        "device-id": session?.data?.user?.device_id,
+        Authorization: `Bearer ${session?.user?.access_token}`,
+        "device-id": session?.user?.device_id as string,
       },
       cache: "no-store",
     }
   ).then((response) => {
     if (response.ok) {
       return response.json();
-    } else {
-      return "Api gave an error";
     }
     throw new Error("Network response was not ok.");
   });

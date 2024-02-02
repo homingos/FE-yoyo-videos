@@ -1,11 +1,8 @@
 "use client";
 
-import Icon from "@/components/icons";
-import Content from "@/components/ui/dashboard/Content";
 import VideoContent from "@/components/ui/dashboard/VideoContent";
 import { getVideos } from "@/lib/api/http";
 import { useSession } from "next-auth/react";
-import Link from "next/link";
 import React, { useEffect, useState } from "react";
 
 const VideosClient = () => {
@@ -22,8 +19,7 @@ const VideosClient = () => {
 
   useEffect(() => {
     const api = async () => {
-      const res = await getVideos(session);
-      console.log("res", res);
+      const res = await getVideos();
       setVideos(res);
       return res;
     };
