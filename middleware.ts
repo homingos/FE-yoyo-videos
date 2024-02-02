@@ -7,8 +7,7 @@ export default withAuth(
   async function middleware(req: NextRequestWithAuth) {
     const token = await getToken({ req });
     const isAuth = !!token;
-    const isAuthPage =
-      req.nextUrl.pathname.startsWith("/login");
+    const isAuthPage = req.nextUrl.pathname.startsWith("/login");
 
     const isWelcomePage = req.nextUrl.pathname.startsWith("/welcome");
 
@@ -54,5 +53,12 @@ export default withAuth(
 );
 
 export const config = {
-  matcher: ["/home", "/home/(.*)", "/login", "/avatars"],
+  matcher: [
+    "/home",
+    "/home/(.*)",
+    "/login",
+    "/avatars",
+    "/avatars/(.*)",
+    "/videos",
+  ],
 };
