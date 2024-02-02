@@ -1,6 +1,6 @@
 /* eslint-disable import/no-extraneous-dependencies */
 import type { LucideIcon } from "lucide-react";
-import { Clock4, Dumbbell, Martini, TrendingUp, Users, PlusCircle, Plus, BarChart2, Wand2, UserRound, Video, ChevronsUp } from "lucide-react";
+import { Clock4, Dumbbell, Martini, TrendingUp, Users, PlusCircle, Plus, BarChart2, Wand2, UserRound, Video, ChevronsUp, PlayCircle, PauseCircle } from "lucide-react";
 
 import { cn } from "@/lib/functions";
 
@@ -18,7 +18,9 @@ export const icons: IIcon = {
   create: Wand2,
   avatar: UserRound,
   video: Video,
-  doubleUp: ChevronsUp
+  doubleUp: ChevronsUp,
+  play: PlayCircle,
+  pause: PauseCircle
 };
 
 const Icon = ({

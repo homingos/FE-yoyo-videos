@@ -72,6 +72,7 @@ export const getTemplates = async () => {
         "Content-Type": "application/json",
         "api-key": "4c6e5d06-0d8e-4026-9a61-fc3d75fda1b0",
       },
+      cache: "no-cache",
     }
   ).then((response) => {
     if (response.ok) {
