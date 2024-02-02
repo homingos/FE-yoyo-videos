@@ -1,4 +1,4 @@
-export const selectAvaturnAvatar = async (session: any, url: any) => {
+export const selectAvaturnAvatar = async (session: any, url: any, gender: any, avatar_id: string) => {
   const res = await fetch(
     `${process.env.NEXT_PUBLIC_BACKEND_URL}thanos/v1/user-profile/avatar/avaturn`,
     {
@@ -11,8 +11,10 @@ export const selectAvaturnAvatar = async (session: any, url: any) => {
       body: JSON.stringify({
         avatar_url: url,
         avatar_meta: {
+          gender: gender ?? undefined,
           source: "avaturn",
         },
+        avatar_id,
       }),
     }
   ).then((response) => {

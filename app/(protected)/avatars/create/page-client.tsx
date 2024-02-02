@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 
 import axios from "axios";
 import FlamLoading from "@/components/ui/flam-loading";
@@ -8,15 +8,21 @@ import { selectAvaturnAvatar } from "@/lib/api/avaturn";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
+import cookies from "js-cookie";
+
+import { AvaturnSDK } from "@avaturn/sdk";
 
 function AvaturnClient() {
   const [link, setLink] = useState(null) as any;
 
-  const { data: session } = useSession();
+   const [containerRef, setContainerRef] = useState<HTMLDivElement | null>(
+     null
+   );
+   const [sdk] = useState<AvaturnSDK>(new AvaturnSDK());
 
-  const router = useRouter();
+   const router = useRouter();
 
-  const frameRef = useRef(null) as any;
+   const { data: session } = useSession();
 
   const handleSessionCreation = async (id: string) => {
     const session = await axios.post(
@@ -30,8 +36,6 @@ function AvaturnClient() {
         },
       }
     );
-
-    console.log(session);
 
     if (session?.status === 200) {
       setLink(session.data.url);
@@ -64,65 +68,55 @@ function AvaturnClient() {
   };
 
   useEffect(() => {
-    if (!link) {
-      (async () => {
-        await handleCreation();
-      })();
-    }
+     if (!link) {
+       (async () => {
+         await handleCreation();
+       })();
+     }
 
-    const frame = frameRef.current as any;
+    if (!containerRef) return;
 
-    if (frame) {
-      frame.src = link;
-    }
-
-    function subscribe(event: any) {
-      let json;
-      try {
-        json = JSON.parse(event.data);
-      } catch (error) {
-        console.log("Error parsing the event data.");
-        return;
-      }
-
-      if (json.source !== "avaturn") {
-        return;
-      }
-
-      // Get avatar GLB URL
-      if (json.eventName === "v2.avatar.exported") {
-        (async () => {
-         try {
-           await selectAvaturnAvatar(session, json.data.url) as any;
-           toast.success("Wohooo Avatar Created !!");
-           router.replace("/home");
-         } catch (error) {
-          toast.error("Something went wrong!");
-          router.replace("/avatars");
-         }
-        })();
-      }
-    }
-
-    window.addEventListener("message", subscribe);
-    document.addEventListener("message", subscribe);
+    sdk
+      .init(containerRef, {
+        url: link,
+        iframeClassName: "sdk-iframe w-full h-full",
+      })
+      .then(() => {
+        sdk.on("export", async (data) => {
+          try {
+            (await selectAvaturnAvatar(session, data.url, data.gender, data.avatarId)) as any;
+            cookies.set(
+              "__avatar",
+              JSON.stringify({
+                id: data.avatarId,
+                gender: data.gender,
+                url: data.url,
+              })
+            );
+            toast.success("Wohooo Avatar Created !!");
+            router.replace("/home");
+          } catch (error) {
+            toast.error("Something went wrong while creating avatar !!");
+            sdk.destroy();
+            router.replace("/avatars");
+          }
+        });
+      })
+      .catch(() => {
+        toast.error("Something went wrong while creating avatar !!");
+        sdk.destroy();
+        router.replace("/avatars");
+      });
 
     return () => {
-      window.removeEventListener("message", subscribe);
-      document.removeEventListener("message", subscribe);
+      sdk.destroy();
     };
-  }, [link, session]);
+  }, [link, sdk, containerRef, session]);
 
   return (
     <div className="h-full w-full flex items-center justify-center bg-black">
       {link ? (
-        <iframe
-          ref={frameRef}
-          title="test"
-          id="frame"
-          className="h-full w-full"
-          allow="camera *; microphone *; clipboard-write"
-        ></iframe>
+        <div ref={setContainerRef} className="sdk__scene w-screen h-screen" />
       ) : (
         <FlamLoading />
       )}
