@@ -1,5 +1,4 @@
 /* eslint-disable no-param-reassign */
-import { UserMinus } from "lucide-react";
 import type { NextAuthOptions, User } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import { cookies } from "next/headers";
