@@ -2,6 +2,7 @@ import Icon from "@/components/icons";
 import { Clapperboard } from "lucide-react";
 import Link from "next/link";
 import React from "react";
+import { Button } from "@/components/ui/button";
 
 const NoVideos = () => {
   return (
@@ -10,10 +11,10 @@ const NoVideos = () => {
       <p className="font-bold text-xl text-white/70 mb-4">
         No Videos Available
       </p>
-      <button>
+      <Button>
         <Icon icon={"home"} size={"18"} />
         <Link href="/home">Go To Home</Link>
-      </button>
+      </Button>
     </div>
   );
 };

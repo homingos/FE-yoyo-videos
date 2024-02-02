@@ -8,6 +8,7 @@ import { signIn } from "next-auth/react";
 import { validateInput } from "@/lib/functions";
 import { sendOtp } from "@/lib/api/auth";
 import { toast } from "sonner";
+import { Button } from "@/components/ui/button";
 
 export default function OTPScreen() {
   const [otp, setOtp] = useState<string>("");
@@ -85,7 +86,7 @@ export default function OTPScreen() {
           valueLength={6}
           error={otpError}
         />
-        <p className="text-white">
+        <p className="text-white flex items-center gap-2">
           Didn’t get the OTP?{" "}
           {otpTimer === 0 ? (
             <span
@@ -100,18 +101,14 @@ export default function OTPScreen() {
             <span className="text-gray-600">Resend OTP in {otpTimer}s</span>
           )}
         </p>
-        <button
+        <Button
           type="submit"
           onClick={handleSubmitOtp}
           disabled={otpDisabled}
-          className={`py-3 ${
-            otpDisabled ? "bg-[#13B31C]/50" : "bg-[#13B31C]"
-          } w-1/2`}
+          className="w-3/4"
         >
-          <p className="flex items-center justify-center gap-2 font-primaryBoldItalic uppercase text-white">
-            {loading ? "Verifying..." : "VERIFY"}
-          </p>
-        </button>
+          {loading ? "Verifying..." : "VERIFY"}
+        </Button>
       </MaxWidthWrapper>
     </div>
   );

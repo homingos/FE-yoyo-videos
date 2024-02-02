@@ -1,22 +1,23 @@
-
 import { STAGGER_CHILD_VARIANTS } from "@/lib/constants";
 import { motion } from "framer-motion";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { useDebounce } from "use-debounce";
 import FlamLoading from "../flam-loading";
+import { Button } from "@/components/ui/button";
+import Link from "next/link";
 
 export default function Intro() {
   const router = useRouter();
   const [loading, setLoading] = useState(true);
-  
+
   useEffect(() => {
     let timeout = setTimeout(() => {
-        setLoading(false);
+      setLoading(false);
     }, 500);
 
     return () => {
-        clearTimeout(timeout);
+      clearTimeout(timeout);
     };
   }, []);
 
@@ -63,13 +64,14 @@ export default function Intro() {
           >
             avatar creation on the go...
           </motion.p>
-          <motion.button
+          <motion.div
             variants={STAGGER_CHILD_VARIANTS}
-            className="rounded-full bg-gray-200 px-10 py-2 font-medium text-black transition-colors hover:bg-white"
-            onClick={() => router.replace("/login")}
+            className="w-full"
           >
-            Get Started
-          </motion.button>
+            <Link href="/login" replace>
+              <Button className="w-3/4">Get Started</Button>
+            </Link>
+          </motion.div>
         </motion.div>
       )}
     </motion.div>

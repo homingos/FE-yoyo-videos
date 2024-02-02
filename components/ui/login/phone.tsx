@@ -1,6 +1,7 @@
 "use client";
 
 import { Dispatch, useEffect, useState } from "react";
+import { Button } from "../button";
 import { useRouter } from "next/navigation";
 import { MaxWidthWrapper } from "../max-width-wrapper";
 import { validateInput } from "@/lib/functions";
@@ -40,7 +41,7 @@ export default function PhoneScreen() {
     <div
       className={`h-screen w-screen object-cover transition-all duration-1000 px-8`}
     >
-      <MaxWidthWrapper className="h-full flex flex-col items-center justify-center gap-8">
+      <MaxWidthWrapper className="h-full flex flex-col items-center justify-center gap-6">
         <div className="flex w-full gap-4 rounded-lg border-2 border-[#ffffff4d] bg-gray-800 py-3 px-6 font-semibold text-white">
           <p className="text-white">+91</p>
           <input
@@ -54,11 +55,13 @@ export default function PhoneScreen() {
             autoFocus
           />
         </div>
-        <button onClick={handleGetOTP} disabled={submitDisabled || isLoading}>
-          <p className="flex items-center justify-center gap-2 font-primaryBoldItalic uppercase text-white">
-            {isLoading ? "Sending..." : "GET OTP"}
-          </p>
-        </button>
+        <Button
+          className="w-full"
+          onClick={handleGetOTP}
+          disabled={submitDisabled}
+        >
+            GET OTP
+        </Button>
       </MaxWidthWrapper>
     </div>
   );
