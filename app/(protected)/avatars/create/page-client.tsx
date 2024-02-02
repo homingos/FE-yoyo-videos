@@ -114,7 +114,7 @@ function AvaturnClient() {
   }, [link, sdk, containerRef, session]);
 
   return (
-    <div className="h-full w-full flex items-center justify-center bg-black">
+    <div className="h-full w-full flex items-center justify-center">
       {link ? (
         <div ref={setContainerRef} className="sdk__scene w-screen h-screen" />
       ) : (
