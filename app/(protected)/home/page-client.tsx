@@ -51,6 +51,7 @@ const HomeClient = ({ templates }: any) => {
         <video
           autoPlay
           loop
+          playsInline
           className="object-cover h-full w-full z-30 duration-300 ease-in-out"
         >
           <source src={item?.preview_url} type="video/mp4" />
@@ -79,6 +80,7 @@ const HomeClient = ({ templates }: any) => {
           onClick={handleCreatevideo}
           type="button"
           disabled={loading}
+          className="gap-2"
         >
           <Icon icon={"create"} size={"18"} />
           {!loading ? 'Create' : 'creating video...'}

@@ -1,5 +1,6 @@
 /* eslint-disable @next/next/no-img-element */
 import Icon from "@/components/icons";
+import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 
@@ -9,14 +10,17 @@ const img =
 const NoAvatars = () => {
   return (
     <div className="rounded-lg flex flex-col gap-4 w-full h-full items-center justify-center p-10 text-white/50">
-      <img
-        className="object-contain h-max saturate-50 animate-bounce-effect z-30"
-        src={img}
-        alt={"hello"}
-      />
+      <div className="relative h-72 w-72">
+        <Image
+          fill
+          className="object-contain saturate-50 z-30"
+          src={img}
+          alt={"hello"}
+        />
+      </div>
       <p className="font-extrabold text-xl">No Avatars Available</p>
       <Link
-        href={'/avatars/create'}
+        href={"/avatars/create"}
         className="w-full rounded-full py-2 flex gap-2 justify-center font-bold items-center bg-[#B9FA00] mb-6 text-black"
       >
         <Icon icon={"create"} size={"18"} />

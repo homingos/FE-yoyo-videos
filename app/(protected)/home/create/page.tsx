@@ -1,5 +1,6 @@
 /* eslint-disable @next/next/no-img-element */
 import { Button } from "@/components/ui/button";
+import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 
@@ -9,16 +10,20 @@ const img =
 const Page = () => {
   return (
     <div className="flex flex-col items-center justify-center gap-4 h-full w-full">
-      <img
-        className="object-contain h-max saturate-50 z-30"
-        src={img}
-        alt={"hello"}
-      />
+      <div className="relative h-72 w-72">
+        <Image
+          fill
+          className="object-contain saturate-50 z-30"
+          src={img}
+          alt={"hello"}
+        />
+      </div>
       <span className="text-white/60 font-extrabold font-3xl text-center">
         {" "}
         Creating your video <br /> It will be available in 5-10 minutes...
       </span>
       <Link
+        replace
         href={"/videos"}
         className="underline underline-offset-2 text-blue-500"
       >

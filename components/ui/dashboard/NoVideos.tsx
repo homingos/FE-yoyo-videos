@@ -11,7 +11,7 @@ const NoVideos = () => {
       <p className="font-bold text-xl text-white/70 mb-4">
         No Videos Available
       </p>
-      <Button>
+      <Button className='gap-2'>
         <Icon icon={"home"} size={"18"} />
         <Link href="/home">Go To Home</Link>
       </Button>

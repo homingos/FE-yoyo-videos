@@ -1,7 +1,11 @@
+'use client';
+
 import { cn } from "@/lib/utils";
-import React, { useEffect, useState } from "react";
+import React from "react";
 import Image from "next/image";
 import cookies from 'js-cookie';
+import Link from "next/link";
+import { toast } from "sonner";
 
 const Card = ({ avatarData }: any) => {
   const handleCardSelect = () => {
@@ -14,10 +18,12 @@ const Card = ({ avatarData }: any) => {
         display_url: avatarData?.avatar_url,
       })
     );
+    toast.success("Avatar Selected !!");
   }
 
   return (
-    <div
+    <Link
+      href={`/home`}
       className={cn(
         "relative inline-flex rounded-2xl overflow-hidden w-full h-72 p-[2px]"
       )}
@@ -48,7 +54,7 @@ const Card = ({ avatarData }: any) => {
       {avatarData?.profile_picture?.webp && (
         <div className="absolute z-20 bg-gradient-to-b from-transparent via-black/80 to-black/60 h-24 w-full bottom-0 left-0"></div>
       )}
-    </div>
+    </Link>
   );
 };
 
