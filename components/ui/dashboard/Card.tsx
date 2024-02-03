@@ -7,6 +7,13 @@ import cookies from 'js-cookie';
 import Link from "next/link";
 import { toast } from "sonner";
 
+const colours = [
+  'bg-[#C5FF1F]',
+  'bg-[#ff66cc]',
+  'bg-[#c3cdc7]',
+  'bg-red-300'
+]
+
 const Card = ({ avatarData }: any) => {
   const handleCardSelect = () => {
     cookies.set(
@@ -40,7 +47,7 @@ const Card = ({ avatarData }: any) => {
             : "bg-yellow-500 opacity-30 animate-pulse"
         )}
       /> */}
-      <div className="relative inline-flex items-center justify-center rounded-2xl overflow-hidden h-full w-full bg-primary text-white">
+      <div className={`relative inline-flex items-center justify-center rounded-2xl overflow-hidden h-full w-full ${colours[Math.floor(Math.random() * 4)]} text-white`}>
         {avatarData?.profile_picture?.webp ? (
           <Image
             src={avatarData?.profile_picture?.webp}
