@@ -10,7 +10,6 @@ import { useRouter } from "next/navigation";
 
 const HomeClient = ({ templates }: any) => {
   const item = templates[0];
-  const [play, setPlay] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
   const [muted, setMuted] = useState<boolean>(true);
 
@@ -22,7 +21,7 @@ const HomeClient = ({ templates }: any) => {
       .then((res: any) => setLoading(false))
       .catch((err: any) => console.log(err));
 
-    router.push("/home/create");
+    router.replace("/home/create");
   };
 
   return (
@@ -48,53 +47,33 @@ const HomeClient = ({ templates }: any) => {
           alt={"hello"}
         />
       </div>
-      {/* <div className="transform -transalte-x-1/2 -translate-y-1/2 left-1/2 top-1/2 fixed z-40 bg-gray-200 text-black rounded-full p-2 animate-disappear delay-300">
-        {muted ? (
-          <Icon
-            icon={"muted"}
-            size={24}
-          />
-        ) : (
-          <Icon
-            icon={"unmute"}
-            size={24}
-          />
-        )}
-      </div> */}
-      {play && (
-        <video
-          autoPlay
-          muted={muted}
-          loop
-          playsInline
-          className="object-cover h-full w-full z-30 duration-300 ease-in-out"
-          onClick={() => setMuted(!muted)}
-        >
-          <source src={item?.preview_url} type="video/mp4" />
-        </video>
-      )}
+      <video
+        autoPlay
+        muted={muted}
+        loop
+        playsInline
+        className="object-cover h-full w-full z-30 duration-300 ease-in-out"
+        poster={item?.thumbnail_url}
+      >
+        <source src={item?.preview_url} type="video/mp4" />
+      </video>
       <div className="absolute z-30 bg-gradient-to-b from-transparent via-black/60 to-black/80 h-48 w-full bottom-0 left-0"></div>
       <div className="fixed bottom-2 left-0 flex flex-col p-4 gap-2 z-30 w-full">
-        <span className="text-white text-xl font-bold mb-4 flex w-full justify-between items-center">
+        <div className="text-white text-xl font-bold mb-4 flex w-full justify-between items-center">
           {item?.display_name}
           <span
-            className="h-max bg-primary rounded-full text-black cursor-pointer"
+            className="h-max bg-primary rounded-full text-black cursor-pointer p-1"
             onClick={() => {
-              setMuted(true);
-              setPlay(!play);
+              setMuted(!muted);
             }}
           >
-            {play ? (
-              <Icon icon={"pause"} size={30} />
+            {muted ? (
+              <Icon icon={"muted"} size={18} />
             ) : (
-              <Icon icon={"play"} size={30} />
+              <Icon icon={"unmute"} size={18} />
             )}
           </span>
-        </span>
-        {/* <span className="flex gap-2 font-semibold text-sm text-white items-center mb-6">
-          <Icon icon={"bar"} size={"18"} />
-          {item?.display_name} theme song
-        </span> */}
+        </div>
         <Button
           onClick={handleCreatevideo}
           type="button"

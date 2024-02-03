@@ -20,9 +20,9 @@ const VideosClient = () => {
 
   return (
     <div className="z-20 flex h-screen flex-col items-start gap-4 py-4 overflow-scroll w-full">
-      <div className="fixed bg-gradient-to-t from-transparent via-transparent to-black/80 h-16 w-full top-0 left-0 z-40"></div>
+      {/* <div className="fixed bg-gradient-to-t from-transparent via-transparent to-black/80 h-16 w-full top-0 left-0 z-10"></div> */}
       <span className="flex gap-4 items-center font-extrabold text-xl text-white mt-8 px-6">
-        <Link href="">
+        <Link href="/home" replace>
           <Icon icon="back" size={24} />
         </Link>{" "}
         My Videos
@@ -30,7 +30,7 @@ const VideosClient = () => {
       {/* Render Videos */}
       <VideoContent videos={videos} />
       {/* <VideoContent videos={[]} /> */}
-      <div className="fixed bg-gradient-to-b from-transparent via-black/60 to-black/60 h-16 w-full bottom-0 left-0 z-40"></div>
+      {/* <div className="fixed bg-gradient-to-b from-transparent via-black/60 to-black/60 h-16 w-full bottom-0 left-0 z-10"></div> */}
     </div>
   );
 };
