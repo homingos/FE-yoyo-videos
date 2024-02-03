@@ -93,13 +93,22 @@ const config = {
             transform: "translateY(-5px)",
             "animation-timing-function": "cubic-bezier(0.8, 0, 1, 1)",
           }
+        },
+        disappear: {
+          "0%": {
+            opacity: "1",
+          },
+          "100%": {
+            opacity: "0"
+          }
         }
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
         "meteor-effect": "meteor 5s linear infinite",
-        "bounce-effect": "bounce 1s linear infinite"
+        "bounce-effect": "bounce 1s linear infinite",
+        "disappear": "disappear 0.5s linear"
       },
     },
   },

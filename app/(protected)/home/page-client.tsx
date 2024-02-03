@@ -11,18 +11,19 @@ import { useRouter } from "next/navigation";
 const HomeClient = ({ templates }: any) => {
   const item = templates[0];
   const [play, setPlay] = useState<boolean>(false);
-  const [loading, setLoading] = useState<boolean>(false)
+  const [loading, setLoading] = useState<boolean>(false);
+  const [muted, setMuted] = useState<boolean>(true);
 
   const router = useRouter();
-  
-  const handleCreatevideo = async () => {
-    setLoading(true)
-    await createUserVideo(item?._id)
-    .then((res: any) => setLoading(false))
-    .catch((err: any) => console.log(err))
 
-    router.push('/home/create');
-  }
+  const handleCreatevideo = async () => {
+    setLoading(true);
+    await createUserVideo(item?._id)
+      .then((res: any) => setLoading(false))
+      .catch((err: any) => console.log(err));
+
+    router.push("/home/create");
+  };
 
   return (
     <div className="relative z-20 flex h-screen w-full flex-col items-start gap-4 overflow-hidden">
@@ -47,12 +48,27 @@ const HomeClient = ({ templates }: any) => {
           alt={"hello"}
         />
       </div>
+      {/* <div className="transform -transalte-x-1/2 -translate-y-1/2 left-1/2 top-1/2 fixed z-40 bg-gray-200 text-black rounded-full p-2 animate-disappear delay-300">
+        {muted ? (
+          <Icon
+            icon={"muted"}
+            size={24}
+          />
+        ) : (
+          <Icon
+            icon={"unmute"}
+            size={24}
+          />
+        )}
+      </div> */}
       {play && (
         <video
           autoPlay
+          muted={muted}
           loop
           playsInline
           className="object-cover h-full w-full z-30 duration-300 ease-in-out"
+          onClick={() => setMuted(!muted)}
         >
           <source src={item?.preview_url} type="video/mp4" />
         </video>
@@ -63,7 +79,10 @@ const HomeClient = ({ templates }: any) => {
           {item?.display_name}
           <span
             className="h-max bg-primary rounded-full text-black cursor-pointer"
-            onClick={() => setPlay(!play)}
+            onClick={() => {
+              setMuted(true);
+              setPlay(!play);
+            }}
           >
             {play ? (
               <Icon icon={"pause"} size={30} />
@@ -83,7 +102,7 @@ const HomeClient = ({ templates }: any) => {
           className="gap-2"
         >
           <Icon icon={"create"} size={"18"} />
-          {!loading ? 'Create' : 'creating video...'}
+          {!loading ? "Create" : "creating video..."}
         </Button>
         {/* <span className="flex gap-2 text-sm items-center w-full justify-center text-white">
           Scroll to see next <Icon icon={"doubleUp"} />
