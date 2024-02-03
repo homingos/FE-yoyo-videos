@@ -16,6 +16,7 @@ import {
   PlayCircle,
   PauseCircle,
   Home,
+  ArrowLeft,
 } from "lucide-react";
 
 import { cn } from "@/lib/functions";
@@ -38,6 +39,7 @@ export const icons: IIcon = {
   play: PlayCircle,
   pause: PauseCircle,
   home: Home,
+  back: ArrowLeft
 };
 
 const Icon = ({

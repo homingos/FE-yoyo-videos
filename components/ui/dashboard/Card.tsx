@@ -15,17 +15,20 @@ const Card = ({ avatarData }: any) => {
         id: avatarData?._id,
         gender: avatarData?.avatar_meta?.gender,
         url: avatarData?.avatar_url,
-        display_url: avatarData?.avatar_url,
+        display_url: avatarData?.profile_picture?.webp,
       })
     );
     toast.success("Avatar Selected !!");
   }
 
+  const { id } = JSON.parse(cookies.get("__avatar") as string);
+
   return (
     <Link
       href={`/home`}
       className={cn(
-        "relative inline-flex rounded-2xl overflow-hidden w-full h-72 p-[2px]"
+        "relative inline-flex rounded-2xl overflow-hidden w-full h-72 p-[2px] opacity-80"
+        ,id === avatarData?._id && 'ring-2 ring-white opacity-100'
       )}
       onClick={handleCardSelect}
     >
@@ -43,6 +46,7 @@ const Card = ({ avatarData }: any) => {
             src={avatarData?.profile_picture?.webp}
             className={cn(
               "object-cover h-full w-full duration-300 ease-in-out"
+              ,id === avatarData?._id && 'scale-110'
             )}
             alt={"loading..."}
             fill
