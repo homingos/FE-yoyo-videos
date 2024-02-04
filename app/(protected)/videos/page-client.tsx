@@ -47,8 +47,7 @@ const VideosClient = () => {
             api();
           }}
         >
-          Fetch videos
-          {loading && <Spinner spinnerClassName="text-white h-4" />}
+          {loading ? <Spinner spinnerClassName="text-white h-4 w-4 p-0" /> : <Icon icon={'refresh'} className={'text-black'} size={16} />}
         </Button>
       </span>
       {/* Render Videos */}
