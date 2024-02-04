@@ -20,6 +20,7 @@ import {
   Volume,
   VolumeX,
   Volume2,
+  RotateCcw,
 } from "lucide-react";
 
 import { cn } from "@/lib/functions";
@@ -45,6 +46,7 @@ export const icons: IIcon = {
   back: ArrowLeft,
   muted: VolumeX,
   unmute: Volume2,
+  refresh: RotateCcw
 };
 
 const Icon = ({
