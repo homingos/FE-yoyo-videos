@@ -8,19 +8,33 @@ import { getAvatars } from "@/lib/api/http";
 import Link from "next/link";
 
 import React, { useEffect, useState } from "react";
+import Loading from "./loading";
 
 const AvatarSelectClient = () => {
   const [avatars, setAvatars] = useState<any[]>([]);
+  const [show, setShow] = useState(true);
+  const [loading, setLoading] = useState<boolean>(true);
+
+  // useEffect(() => {
+  //   setTimeout(() => {
+  //     setShow(false);
+  //   }, 5000);
+  // }, []);
 
   useEffect(() => {
     const api = async () => {
       const res = await getAvatars();
+      setLoading(false);
       console.log("res", res);
       setAvatars(res);
       return res;
     };
     api();
   }, []);
+
+  if(loading) {
+    return <Loading />
+  }
 
   return (
     <div className="z-20 flex h-screen flex-col items-start gap-3 py-4 overflow-auto croll w-full">
