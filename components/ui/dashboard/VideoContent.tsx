@@ -1,7 +1,12 @@
+import Loading from "@/app/(protected)/videos/loading";
 import NoVideos from "./NoVideos";
 import VideoCard from "./VideoCard";
 
-const VideoContent = ({ videos }: { videos: any }) => {
+const VideoContent = ({ videos, loading }: { videos: any, loading: boolean }) => {
+  if (loading) {
+    return <Loading />;
+  }
+  
   if (!videos || videos.length === 0) {
     return (
       <div className="h-full w-full flex items-center text-white justify-center">
