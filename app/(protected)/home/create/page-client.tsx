@@ -12,8 +12,8 @@ const PageClient = () => {
   const [avatarData, setAvatarData] = useState<any>(null);
  
   useEffect(() => {
-     const data = cookies.get("__avatar") as string;
-     const aData = JSON.parse(data) || null;
+     const data = cookies.get("__avatar") || null;
+     const aData = JSON.parse(data as any);
      setAvatarData(aData);
   }, [])
 

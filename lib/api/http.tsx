@@ -109,12 +109,8 @@ export const getVideos = async () => {
   return res.data;
 };
 
-export const createUserVideo = async (template_id: string) => {
+export const createUserVideo = async (template_id: string, avatar_id: string) => {
   const session = await getServerSession(options);
-
-  const cookieData: any = cookies().get('__avatar')?.value;
-
-  const avatar_id = JSON.parse(cookieData)?.id
 
   const res = await fetch(
     `${process.env.NEXT_PUBLIC_BACKEND_URL}thanos/v1/user-videos/create`,
@@ -125,10 +121,10 @@ export const createUserVideo = async (template_id: string) => {
         Authorization: `Bearer ${session?.user?.access_token}`,
         "device-id": session?.user?.device_id as string,
       },
-      body : JSON.stringify({
+      body: JSON.stringify({
         template_id,
-        "user_profile_id": session?.user?.user_profile_id,
-        avatar_id: '6409e1c807622cb36ea1006e'
+        user_profile_id: session?.user?.user_profile_id,
+        avatar_id: avatar_id,
       }),
       cache: "no-store",
     }
