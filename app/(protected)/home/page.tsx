@@ -6,7 +6,7 @@ import { notFound } from "next/navigation";
 export default async function Page() {
   const templates = await getTemplates();
 
-  if(templates.length === 0 || !templates) {
+  if(templates?.length === 0 || !templates) {
     notFound();
   }
   

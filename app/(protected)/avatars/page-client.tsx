@@ -4,38 +4,11 @@ import Icon from "@/components/icons";
 import CreateAvatarButton from "@/components/ui/avatars/create-avatar-button";
 import Content from "@/components/ui/dashboard/Content";
 import NoAvatars from "@/components/ui/home/No-avatars";
-import { getAvatars } from "@/lib/api/http";
 import Link from "next/link";
 
-import React, { useEffect, useState } from "react";
-import Loading from "./loading";
+import React from "react";
 
 const AvatarSelectClient = () => {
-  const [avatars, setAvatars] = useState<any[]>([]);
-  const [show, setShow] = useState(true);
-  const [loading, setLoading] = useState<boolean>(true);
-
-  // useEffect(() => {
-  //   setTimeout(() => {
-  //     setShow(false);
-  //   }, 5000);
-  // }, []);
-
-  useEffect(() => {
-    const api = async () => {
-      const res = await getAvatars();
-      setLoading(false);
-      console.log("res", res);
-      setAvatars(res);
-      return res;
-    };
-    api();
-  }, []);
-
-  if(loading) {
-    return <Loading />
-  }
-
   return (
     <div className="z-20 flex h-screen flex-col items-start gap-3 py-4 overflow-auto croll w-full">
       {/* <div className="fixed bg-gradient-to-t from-transparent via-transparent to-black/80 h-16 w-full top-0 left-0 z-10"></div> */}
@@ -45,8 +18,7 @@ const AvatarSelectClient = () => {
         </Link>
         My Avatars
       </div>
-      {avatars.length !== 0 && <Content avatars={avatars} />}
-      {avatars.length === 0 && <NoAvatars />}
+      <Content />
       <CreateAvatarButton />
       {/* <div className="fixed bg-gradient-to-b from-transparent via-black/60 to-black/60 h-16 w-full bottom-0 left-0 z-10"></div> */}
     </div>

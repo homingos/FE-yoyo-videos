@@ -80,9 +80,11 @@ export const getTemplates = async () => {
       return response.json();
     }
     throw new Error("Network response was not ok.");
+  }).catch((err) => {
+    console.log(err);
   });
 
-  return res.data;
+  return res?.data ? res?.data : null;
 };
 
 export const getVideos = async () => {

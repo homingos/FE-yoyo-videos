@@ -60,5 +60,6 @@ export const config = {
     "/avatars",
     "/avatars/(.*)",
     "/videos",
+    '/new/(.*)',
   ],
 };
