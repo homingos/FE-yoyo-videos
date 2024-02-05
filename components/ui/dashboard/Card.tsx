@@ -1,7 +1,7 @@
 'use client';
 
 import { cn } from "@/lib/utils";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import cookies from 'js-cookie';
 import Link from "next/link";
@@ -28,7 +28,13 @@ const Card = ({ avatarData }: any) => {
     toast.success("Avatar Selected !!");
   }
 
-  const { id } = JSON.parse(cookies.get("__avatar") as string);
+  const [id, setId] = useState<any>(null);
+
+  useEffect(() => {
+    const data = cookies.get("__avatar") || null;
+    const aData = JSON.parse(data as any);
+    setId(aData?.id);
+  }, []);
 
   return (
     <Link

@@ -7,6 +7,8 @@ import Link from "next/link";
 import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
+import cookies from "js-cookie";
+import { toast } from "sonner";
 
 const HomeClient = ({ templates }: any) => {
   const item = templates[0];
@@ -17,11 +19,27 @@ const HomeClient = ({ templates }: any) => {
 
   const handleCreatevideo = async () => {
     setLoading(true);
-    await createUserVideo(item?._id)
-      .then((res: any) => setLoading(false))
-      .catch((err: any) => console.log(err));
 
-    router.replace("/home/create");
+    const cookieData: any = cookies.get("__avatar") || null;
+
+    const avatarData = JSON.parse(cookieData);
+
+    if (!avatarData) {
+      toast.error("Select a Avatar first");
+      setLoading(false);
+      router.replace("/avatars");
+      return;
+    }
+
+    await createUserVideo(item?._id, avatarData?.id)
+      .then((res: any) => {
+        router.replace("/home/create");
+        setLoading(false);
+      })
+      .catch((err: any) => {
+        toast.error("Error creating video");
+        console.log(err);
+      });
   };
 
   return (
