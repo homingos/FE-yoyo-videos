@@ -2,8 +2,8 @@
 
 import Icon from "@/components/icons";
 import CreateAvatarButton from "@/components/ui/avatars/create-avatar-button";
-import Content from "@/components/ui/dashboard/Content";
-import NoAvatars from "@/components/ui/home/No-avatars";
+import Content from "@/components/ui/avatars/Content";
+import NoAvatars from "@/components/ui/avatars/No-avatars";
 import Link from "next/link";
 
 import React from "react";

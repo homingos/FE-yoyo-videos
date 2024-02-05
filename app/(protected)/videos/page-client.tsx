@@ -1,7 +1,7 @@
 "use client";
 
 import Icon from "@/components/icons";
-import VideoContent from "@/components/ui/dashboard/VideoContent";
+import VideoContent from "@/components/ui/videos/VideoContent";
 import React from "react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";

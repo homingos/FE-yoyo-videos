@@ -13,15 +13,13 @@ import {
   UserRound,
   Video,
   ChevronsUp,
-  PlayCircle,
-  PauseCircle,
   Home,
   ArrowLeft,
-  Volume,
   VolumeX,
   Volume2,
   RotateCcw,
 } from "lucide-react";
+import { FaPause, FaPlay } from "react-icons/fa";
 
 import { cn } from "@/lib/functions";
 
@@ -40,8 +38,8 @@ export const icons: IIcon = {
   avatar: UserRound,
   video: Video,
   doubleUp: ChevronsUp,
-  play: PlayCircle,
-  pause: PauseCircle,
+  play: FaPlay,
+  pause: FaPause,
   home: Home,
   back: ArrowLeft,
   muted: VolumeX,

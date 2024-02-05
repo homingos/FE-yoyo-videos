@@ -1,6 +1,6 @@
 import React from "react";
 import Card from "./Card";
-import NoAvatars from "../home/No-avatars";
+import NoAvatars from "./No-avatars";
 import useAvatars from "@/app/(protected)/avatars/use-avatars";
 import { Skeleton } from "@/components/Skeleton";
 
