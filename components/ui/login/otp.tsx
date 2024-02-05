@@ -54,7 +54,8 @@ export default function OTPScreen() {
     setLoading(false);
   };
 
-  const handleSubmitOtp = async () => {
+  const handleSubmitOtp = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
     setLoading(true);
 
     const res = await signIn("credentials", {
@@ -62,12 +63,10 @@ export default function OTPScreen() {
       otp: otp,
       redirect: false,
     });
-    console.log(res);
-
     if (res?.ok) {
       router.replace("/home");
     } else {
-      await setOtpError(true);
+      setOtpError(true);
     }
     setLoading(false);
   };
@@ -76,39 +75,39 @@ export default function OTPScreen() {
     <div
       className={`h-screen w-screen object-cover transition-all duration-1000 px-8`}
     >
-      <MaxWidthWrapper className="h-full flex flex-col items-center justify-center gap-8">
-        <OtpInput
-          value={otp}
-          onChange={async (x: any) => {
-            await setOtpError(false);
-            await setOtp(x);
-          }}
-          valueLength={6}
-          error={otpError}
-        />
-        <p className="text-white flex items-center gap-2">
-          Didn’t get the OTP?{" "}
-          {otpTimer === 0 ? (
-            <span
-              className="text-primary"
-              onClick={handleResendOTP}
-              role="button"
-              tabIndex={0}
-            >
-              Resend code
-            </span>
-          ) : (
-            <span className="text-gray-600">Resend OTP in {otpTimer}s</span>
-          )}
-        </p>
-        <Button
-          type="submit"
-          onClick={handleSubmitOtp}
-          disabled={otpDisabled}
-          className="w-3/4"
+      <MaxWidthWrapper className="h-full">
+        <form
+          onSubmit={handleSubmitOtp}
+          className="h-full flex flex-col items-center justify-center gap-8"
         >
-          {loading ? "Verifying..." : "VERIFY"}
-        </Button>
+          <OtpInput
+            value={otp}
+            onChange={async (x: any) => {
+              setOtpError(false);
+              setOtp(x);
+            }}
+            valueLength={6}
+            error={otpError}
+          />
+          <p className="text-white flex items-center gap-2">
+            Didn’t get the OTP?{" "}
+            {otpTimer === 0 ? (
+              <span
+                className="text-primary"
+                onClick={handleResendOTP}
+                role="button"
+                tabIndex={0}
+              >
+                Resend code
+              </span>
+            ) : (
+              <span className="text-gray-600">Resend OTP in {otpTimer}s</span>
+            )}
+          </p>
+          <Button type="submit" disabled={otpDisabled} className="w-3/4">
+            {loading ? "Verifying..." : "VERIFY"}
+          </Button>
+        </form>
       </MaxWidthWrapper>
     </div>
   );

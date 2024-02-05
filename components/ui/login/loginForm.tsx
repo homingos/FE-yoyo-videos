@@ -19,7 +19,7 @@ import { cn } from "@/lib/utils";
 import { Input } from "../input";
 
 export const phoneSchema = z.object({
-  phone: z.string().refine((value) => /^0?[3-9]\d{9}$/.test(value), {
+  phone: z.string().refine((value) => /^[3-9]\d{9}$/.test(value), {
     message: "Invalid number.",
   }),
 });
@@ -35,7 +35,7 @@ export default function LoginForm({
     resolver: zodResolver(phoneSchema),
     defaultValues: { phone: "" },
   });
-  //   const { error } = useFormField();
+  const { errors } = form.formState;
 
   return (
     <Form {...form}>
@@ -48,7 +48,9 @@ export default function LoginForm({
           name="phone"
           render={({ field }) => (
             <FormItem>
-              <FormLabel className="text-md font-bold">Phone No:</FormLabel>
+              <FormLabel className="text-md font-bold">
+                Enter Your Phone number:
+              </FormLabel>
               <FormControl>
                 <div
                   className={cn(
@@ -57,7 +59,8 @@ export default function LoginForm({
                 >
                   <p>+91</p>
                   <Input
-                    placeholder="Enter your phone number"
+                    maxLength={10}
+                    placeholder="Phone Number"
                     {...field}
                     inputMode="numeric"
                     disabled={isLoading}
@@ -68,7 +71,11 @@ export default function LoginForm({
             </FormItem>
           )}
         />
-        <Button className="w-full" type="submit">
+        <Button
+          disabled={!!errors.phone?.message}
+          className="w-full"
+          type="submit"
+        >
           {isLoading ? "Sending..." : "GET OTP"}
         </Button>
       </form>
