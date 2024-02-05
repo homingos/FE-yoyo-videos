@@ -4,6 +4,9 @@ import "./globals.css";
 import { cn } from "@/lib/functions";
 import { Toaster } from "@/components/ui/sonner";
 import type { Viewport } from "next";
+import AuthProvider from "@/lib/providers/AuthProvider";
+import { Background } from "@/components/ui/background";
+import SWRProvider from "@/lib/providers/SwrProvider";
 
 const maprope = Manrope({ subsets: ["latin"] });
 
@@ -28,8 +31,14 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <Toaster />
-      <body className={cn(maprope.className, "antialiased")}>{children}</body>
+      <AuthProvider>
+        <SWRProvider>
+          <Toaster />
+          <body className={cn(maprope.className, "antialiased")}>
+              {children}
+          </body>
+        </SWRProvider>
+      </AuthProvider>
     </html>
   );
 }
