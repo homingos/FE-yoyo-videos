@@ -17,7 +17,7 @@ export default function PhoneScreen() {
     try {
       setIsLoading(true);
       await sendOtp(values.phone);
-      router.replace(`/login?phone=${values.phone}`);
+      router.push(`/login?phone=${values.phone}`);
     } catch (err: any) {
       // TODO: add failed toast
       toast.error(err.message);
