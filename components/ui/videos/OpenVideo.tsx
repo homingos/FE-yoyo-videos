@@ -20,11 +20,14 @@ export function OpenVideo({ videoRef, videoData }: any) {
     <Dialog>
       <DialogTrigger asChild>
         <video
-          onClick={() => setIsPlaying(true)}
           playsInline
+          muted
           src={videoData?.video_url}
+          preload="metadata"
           className="h-full w-full object-cover"
-        />
+        >
+          <source src={`${videoData?.video_url}#t=0.2`} type="video/mp4" />
+        </video>
       </DialogTrigger>
       <DialogContent className="rounded-xl overflow-hidden p-0 w-4/5">
         <div
@@ -50,11 +53,13 @@ export function OpenVideo({ videoRef, videoData }: any) {
         <video
           ref={videoRef}
           playsInline
-          src={videoData?.video_url}
           autoPlay
           muted={muted}
           className="h-full w-full object-cover z-30"
-        />
+          preload="metadata"
+        >
+          <source src={`${videoData?.video_url}#t=0.2`} type="video/mp4" />
+        </video>
       </DialogContent>
     </Dialog>
   );

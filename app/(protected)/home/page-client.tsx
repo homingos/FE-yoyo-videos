@@ -57,14 +57,6 @@ const HomeClient = ({ templates }: any) => {
       >
         <Icon icon={"video"} size={25} />
       </Link>
-      <div className="absolute left-0 top-0 h-full w-full z-30">
-        <Image
-          fill
-          className="object-fit saturate-50 duration-300 ease-in-out z-30"
-          src={item?.thumbnail_url}
-          alt={"hello"}
-        />
-      </div>
       <video
         autoPlay
         muted={muted}
@@ -72,8 +64,9 @@ const HomeClient = ({ templates }: any) => {
         playsInline
         className="object-cover h-full w-full z-30 duration-300 ease-in-out"
         poster={item?.thumbnail_url}
+        preload="metadata"
       >
-        <source src={item?.preview_url} type="video/mp4" />
+        <source src={`${item?.preview_url}#t=0.2`} type="video/mp4" />
       </video>
       <div className="absolute z-30 bg-gradient-to-b from-transparent via-black/60 to-black/80 h-48 w-full bottom-0 left-0"></div>
       <div className="fixed bottom-2 left-0 flex flex-col p-4 gap-2 z-30 w-full">
