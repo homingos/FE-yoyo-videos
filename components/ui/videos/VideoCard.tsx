@@ -1,6 +1,7 @@
 import { cn } from "@/lib/utils";
 import React, { useRef, useState } from "react";
 import { OpenVideo } from "./OpenVideo";
+import Spinner from "@/components/Spinner";
 
 const VideoCard = ({ videoData }: { videoData: any }) => {
   const videoRef = useRef<any>(null);
@@ -16,8 +17,9 @@ const VideoCard = ({ videoData }: { videoData: any }) => {
           <OpenVideo videoRef={videoRef} videoData={videoData} />
         </div>
       ) : (
-        <div className="text-white text-center w-full flex items-center justify-center">
-          Generating Video...
+        <div className="text-primary text-center w-full flex flex-col gap-3 items-center justify-center">
+          <Spinner spinnerClassName="text-primary" />
+          <p>generating</p>
         </div>
       )}
     </div>
