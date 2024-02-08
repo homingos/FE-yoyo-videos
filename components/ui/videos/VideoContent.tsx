@@ -6,7 +6,7 @@ import NoVideos from "./NoVideos";
 import { Skeleton } from "@/components/Skeleton";
 
 const VideoContent = () => {
-  const { data: videos, loading } = useVideos();
+  const { data: videos, loading, mutate } = useVideos();
 
   if (loading) {
     return (
@@ -25,7 +25,7 @@ const VideoContent = () => {
   return (
     <div className="grid grid-cols-2 gap-4 items-center justify-center px-6 mt-2 mb-16 w-full">
       {videos && videos?.map((videoData: any, index: number) => (
-        <VideoCard key={`${videoData?._id} + ${index}`} videoData={videoData} />
+        <VideoCard key={`${videoData?._id} + ${index}`} videoData={videoData} mutate={mutate} />
       ))}
     </div>
   );
