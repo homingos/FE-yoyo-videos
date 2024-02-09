@@ -84,13 +84,14 @@ function AvaturnClient() {
       .then(() => {
         sdk.on("export", async (data) => {
           try {
-            (await selectAvaturnAvatar(session, data.url, data.gender, data.avatarId)) as any;
+            const res = await selectAvaturnAvatar(session, data.url, data.gender, data.avatarId) as any;
+
             cookies.set(
               "__avatar",
               JSON.stringify({
-                id: data.avatarId,
-                gender: data.gender,
-                url: data.url,
+                id: res._id,
+                gender: res.avatar_meta.gender,
+                url: res.new_avatar_url,
               })
             );
             toast.success("Wohooo Avatar Created !!");

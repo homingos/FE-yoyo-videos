@@ -34,11 +34,11 @@ const HomeClient = ({ templates }: any) => {
     await createUserVideo(item?._id, avatarData?.id)
       .then((res: any) => {
         router.replace("/home/create");
-        setLoading(false);
       })
       .catch((err: any) => {
         toast.error("Error creating video");
-        console.log(err);
+      }).finally(() => {
+        setLoading(false);
       });
   };
 

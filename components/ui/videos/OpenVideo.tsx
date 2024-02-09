@@ -1,3 +1,5 @@
+'use client';
+
 import Icon from "@/components/icons";
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 import { useState } from "react";
@@ -22,11 +24,10 @@ export function OpenVideo({ videoRef, videoData }: any) {
         <video
           playsInline
           muted
-          src={videoData?.video_url}
           preload="metadata"
           className="h-full w-full object-cover"
         >
-          <source src={`${videoData?.video_url}#t=0.2`} type="video/mp4" />
+          <source src={`${videoData?.video_url}#t=15`} type="video/mp4" />
         </video>
       </DialogTrigger>
       <DialogContent className="rounded-xl overflow-hidden p-0 w-4/5">
@@ -50,6 +51,12 @@ export function OpenVideo({ videoRef, videoData }: any) {
             <Icon icon={"unmute"} size={30} />
           )}
         </div>
+        {/* <div
+            onClick={handleShare}
+            className="absolute right-4 top-4 z-[100] cursor-pointer text-4xl text-white"
+          >
+            <Icon icon={"muted"} size={30} />
+          </div> */}
         <video
           ref={videoRef}
           playsInline
@@ -58,7 +65,7 @@ export function OpenVideo({ videoRef, videoData }: any) {
           className="h-full w-full object-cover z-30"
           preload="metadata"
         >
-          <source src={`${videoData?.video_url}#t=0.2`} type="video/mp4" />
+          <source src={`${videoData?.video_url}#t=0.1`} type="video/mp4" />
         </video>
       </DialogContent>
     </Dialog>

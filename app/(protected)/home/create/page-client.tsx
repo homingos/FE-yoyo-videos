@@ -21,7 +21,9 @@ const PageClient = () => {
     <div className="flex flex-col items-center justify-center gap-4 h-full w-full">
       <img
         className="object-contain h-max saturate-50 z-30"
-        src={avatarData ? avatarData?.display_url : img}
+        src={
+          avatarData && avatarData?.display_url ? avatarData?.display_url : img
+        }
         alt={"hello"}
       />
       <span className="text-white/60 font-extrabold font-3xl text-center">

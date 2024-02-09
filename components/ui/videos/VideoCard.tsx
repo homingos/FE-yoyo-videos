@@ -7,6 +7,35 @@ import { toast } from "sonner";
 import { createUserVideo } from "@/lib/api/http";
 import Spinner from "@/components/Spinner";
 
+export function formatDateToCustomFormat(inputDate: Date) {
+  // Define the months array to convert month number to month name
+  const months = [
+    "Jan",
+    "Feb",
+    "Mar",
+    "Apr",
+    "May",
+    "Jun",
+    "Jul",
+    "Aug",
+    "Sep",
+    "Oct",
+    "Nov",
+    "Dec",
+  ];
+
+  // Get the day, month, and year
+  const day = inputDate.getDate();
+  const month = inputDate.getMonth();
+  const year = inputDate.getFullYear();
+
+  // Format the date
+  const formattedDate = `${day} ${months[month]} ${year}`;
+
+  return formattedDate;
+}
+
+
 const VideoCard = ({ videoData, mutate }: { videoData: any; mutate: any }) => {
   const videoRef = useRef<any>(null);
   const [loading, setLoading] = useState<boolean>(false);
@@ -45,15 +74,15 @@ const VideoCard = ({ videoData, mutate }: { videoData: any; mutate: any }) => {
         </div>
       )}
       {videoData.status === "PROCESSED" && (
-        <div className=" inline-flex items-center justify-center rounded-2xl overflow-hidden h-full w-full bg-[#0a0a0a]">
-          <OpenVideo videoRef={videoRef} videoData={videoData} />
-        </div>
+        <OpenVideo videoRef={videoRef} videoData={videoData} />
       )}
       {videoData.status !== "PROCESSED" && videoData.status !== "FAILED" && (
-        <div className="text-white text-center w-full flex items-center justify-center">
-          Generating Video...
+        <div className="text-white text-center w-full flex flex-col gap-2 items-center justify-center">
+          <Spinner spinnerClassName="text-primary" />
+          generating Video
         </div>
       )}
+      <p className="absolute bottom-2 left-2 text-xs font-bold bg-white rounded-full px-2 py-1">{formatDateToCustomFormat(new Date(videoData.created_at))}</p>
     </div>
   );
 };
