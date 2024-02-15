@@ -18,6 +18,7 @@ import {
   VolumeX,
   Volume2,
   RotateCcw,
+  Share2,
 } from "lucide-react";
 import { FaPause, FaPlay } from "react-icons/fa";
 
@@ -44,7 +45,8 @@ export const icons: IIcon = {
   back: ArrowLeft,
   muted: VolumeX,
   unmute: Volume2,
-  refresh: RotateCcw
+  refresh: RotateCcw,
+  share: Share2,
 };
 
 const Icon = ({

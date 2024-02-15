@@ -82,7 +82,7 @@ const VideoCard = ({ videoData, mutate }: { videoData: any; mutate: any }) => {
           generating Video
         </div>
       )}
-      <p className="absolute bottom-2 left-2 text-xs font-bold bg-white rounded-full px-2 py-1">{formatDateToCustomFormat(new Date(videoData.created_at))}</p>
+      <p className="absolute bottom-2 left-2 text-xs font-bold bg-white rounded-full px-2 py-1">{formatDateToCustomFormat(new Date(videoData.updated_at))}</p>
     </div>
   );
 };

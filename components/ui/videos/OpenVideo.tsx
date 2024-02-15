@@ -1,12 +1,15 @@
-'use client';
+"use client";
 
 import Icon from "@/components/icons";
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
+import useUnity from "@/lib/hooks/use-unity";
 import { useState } from "react";
 
 export function OpenVideo({ videoRef, videoData }: any) {
   const [isPlaying, setIsPlaying] = useState(true);
-  const [muted, setMuted] = useState<boolean>(false);
+  const [muted, setMuted] = useState<boolean>(true);
+
+  const { sendDataToUnity } = useUnity();
 
   const handlePlayPause = () => {
     if (videoRef?.current?.paused) {
@@ -16,6 +19,17 @@ export function OpenVideo({ videoRef, videoData }: any) {
       videoRef.current.pause();
       setIsPlaying(false);
     }
+  };
+
+  const handleShare = () => {
+    sendDataToUnity(
+      "SHARE",
+      JSON.stringify({
+        subject: "Watch me light diyas with our PM Modiji at Ram Mandir!",
+        text: "Watch me light diyas with our PM Modiji at Ram Mandir! check out this url : ",
+        url: `${videoData?.video_url}`,
+      })
+    );
   };
 
   return (
@@ -51,12 +65,12 @@ export function OpenVideo({ videoRef, videoData }: any) {
             <Icon icon={"unmute"} size={30} />
           )}
         </div>
-        {/* <div
-            onClick={handleShare}
-            className="absolute right-4 top-4 z-[100] cursor-pointer text-4xl text-white"
-          >
-            <Icon icon={"muted"} size={30} />
-          </div> */}
+        <div
+          onClick={handleShare}
+          className="absolute right-4 top-4 z-[100] cursor-pointer text-4xl text-white"
+        >
+          <Icon icon={"share"} size={30} />
+        </div>
         <video
           ref={videoRef}
           playsInline
