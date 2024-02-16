@@ -2,7 +2,6 @@
 
 import Icon from "@/components/icons";
 import { createUserVideo } from "@/lib/api/http";
-import Image from "next/image";
 import Link from "next/link";
 import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
