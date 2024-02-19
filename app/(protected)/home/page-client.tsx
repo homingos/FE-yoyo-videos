@@ -32,6 +32,11 @@ const HomeClient = ({ templates }: any) => {
 
     await createUserVideo(item?._id, avatarData?.id)
       .then((res: any) => {
+        
+        if (res?.status === 'PROCESSED') {
+          toast.warning("Video available for selected avatar");
+        }
+
         router.replace("/home/create");
       })
       .catch((err: any) => {
